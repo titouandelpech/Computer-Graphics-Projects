@@ -1,0 +1,6 @@
+﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
+  MoverConnection.cpp
+C:\Users\titou\Downloads\Computer Programming\NewFrameWork2Init\FrameWork\MoverConnection.cpp(46,25): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Downloads\Computer Programming\NewFrameWork2Init\FrameWork\MoverConnection.cpp(46,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Downloads\Computer Programming\NewFrameWork2Init\FrameWork\MoverConnection.cpp(46,15): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+  FrameWork.vcxproj -> C:\Users\titou\Downloads\Computer Programming\NewFrameWork2Init\FrameWork\Debug\FrameWork.exe
