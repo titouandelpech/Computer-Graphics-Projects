@@ -22,6 +22,8 @@ Fire::Fire(int type)
 
 Fire::~Fire()
 {
+	delete m_particle;
+	m_particle = nullptr;
 }
 
 bool Fire::update(float duration)
@@ -44,6 +46,8 @@ void Fire::draw(int shadow)
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
 
+	glPushAttrib(GL_CURRENT_BIT); // Save the current color state
+
 	if (!shadow)
 		glColor3f(m_color.x, m_color.y, m_color.z);
 
@@ -56,14 +60,20 @@ void Fire::draw(int shadow)
 
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
+
+	glPopAttrib(); // Restore the color state
 }
 
-void Fire::drawHistory()
+
+void Fire::drawHistory(float alpha)
 {
+	glEnable(GL_BLEND); // Enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Set blending function
+
 	glLineWidth(2.0f);
 	glPushMatrix();
 	glBegin(GL_LINE_STRIP);
-	glColor3f(m_color.x, m_color.y, m_color.z);
+	glColor4f(m_color.x, m_color.y, m_color.z, alpha); // Set color with alpha component for transparency
 	for (unsigned int i = 0; i < m_history.size(); i += 2) {
 		cyclone::Vector3 pos = m_history[i];
 		glVertex3f(pos.x, pos.y, pos.z);
@@ -72,7 +82,9 @@ void Fire::drawHistory()
 	glPopMatrix();
 	glLineWidth(1.0f);
 
+	glDisable(GL_BLEND); // Disable blending
 }
+
 
 void Fire::setRule(FireworksRule* r)
 {

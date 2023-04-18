@@ -22,13 +22,13 @@ public:
 	void create(FireworksRule *rule = NULL, cyclone::Vector3 *startPos = NULL, FireworksRule *parentRule = NULL); //create init Fires 
 	void create(Fire* parent); //create Child Fires
 	void draw(int shadow); //draw
-	FireworksRule m_rule[10]; //rules
+	FireworksRule m_rule[11]; //rules
 	std::vector<Fire*> fireworks; //contains Fires
 
 	std::vector<Wave> waves;
 	void CreateLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent);
 	void CreateRevertLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent);
-	void CreateZigZagLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent);
+	void CreateCross(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent);
 
 	float passedTime;
 };

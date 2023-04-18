@@ -1,9 +1,9 @@
 ﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   Fireworks.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(98,39): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(108,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(112,40): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(165,19): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'int', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(142,39): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(152,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(156,40): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(180,16): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\xmemory(682,68): warning C4244: 'argument' : conversion de '_Ty' en 'float', perte possible de données
           with
           [
@@ -43,5 +43,5 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.3162
           [
               _Ty=Fireworks::Wave
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(21): message : voir la référence à l'instanciation de la fonction modèle 'void std::vector<Fireworks::Wave,std::allocator<Fireworks::Wave>>::emplace_back<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(35): message : voir la référence à l'instanciation de la fonction modèle 'void std::vector<Fireworks::Wave,std::allocator<Fireworks::Wave>>::emplace_back<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
   FrameWork.vcxproj -> C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Debug\FrameWork.exe

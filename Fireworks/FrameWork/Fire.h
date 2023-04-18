@@ -39,7 +39,7 @@ public:
 	std::deque <cyclone::Vector3> m_history; //history saving
 	bool update(float duration); //return bool
 	void draw(int shadow);
-	void drawHistory();
+	void drawHistory(float alpha);
 	void setRule(FireworksRule* r); //set a particular rule
 	void putHistory(); //Save current position in the m_history
 };

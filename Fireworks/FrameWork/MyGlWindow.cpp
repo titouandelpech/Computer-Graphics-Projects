@@ -210,7 +210,7 @@ void MyGlWindow::draw()
 
 void MyGlWindow::test()
 {
-	m_fireworks->~Fireworks();
+	delete m_fireworks;
 	m_fireworks = new Fireworks();
 }
 
