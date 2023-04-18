@@ -4,14 +4,26 @@ Fireworks::Fireworks()
 {
 	passedTime = 0;
 
-	wave1 = false;
-	wave2 = false;
-	wave3 = false;
+	//set child rules
+	m_rule[0].setParameters(1, 0.5f, 1.0f, cyclone::Vector3(-5, -10, -5), cyclone::Vector3(5, 15, 5), 0.9, 25);
+	m_rule[0].color = cyclone::Vector3(1, 0, 0); //red
+	m_rule[2].setParameters(1, 6.0f, 6.5f, cyclone::Vector3(-25, -25, -25), cyclone::Vector3(25, 25, 25), 0.9, 150);
+	m_rule[2].color = cyclone::Vector3(0, 1, 1); //cyan
+	
+	//set parent rules
+	m_rule[1].setParameters(0, 4.0f, 4.1f, cyclone::Vector3(-0.1f, 30, -0.1f), cyclone::Vector3(0.1f, 30, 0.1f), 1.0, 1);
+	m_rule[1].color = cyclone::Vector3(1, 0.5f, 0); //orange
+	m_rule[3].setParameters(0, 4.0f, 4.1f, cyclone::Vector3(-0.1f, 35, -0.1f), cyclone::Vector3(0.1f, 35, 0.1f), 1.0, 1);
+	m_rule[3].color = cyclone::Vector3(0.125f, 0.698f, 0.666f); //seagreen
 
-	m_rule[0].setParameters(1, 0.5f, 5.4f, cyclone::Vector3(-5, 10, -5), cyclone::Vector3(5, 15, 5), 0.9, 20);
-	m_rule[1].setParameters(1, 0.5f, 10.4f, cyclone::Vector3(-15, 5, -5), cyclone::Vector3(15, 20, 15), 0.2, 40);
-	m_rule[2].setParameters(1, 0.5f, 12.4f, cyclone::Vector3(-5, 0, -5), cyclone::Vector3(5, 5, 5), 0.7, 25);
-	m_rule[3].setParameters(1, 0.5f, 8.0f, cyclone::Vector3(-20, 30, -20), cyclone::Vector3(20, 35, 20), 0.5, 30);
+	//set firework waves
+	CreateLine(0, &m_rule[0], cyclone::Vector3(0, 0, 0), &m_rule[1]);
+	waves.emplace_back(5, &m_rule[2], cyclone::Vector3(), &m_rule[3]);
+	CreateRevertLine(8, &m_rule[0], cyclone::Vector3(0, 0, 0), &m_rule[1]);
+	waves.emplace_back(13, &m_rule[2], cyclone::Vector3(-40, 0, 0), &m_rule[3]);
+	waves.emplace_back(13, &m_rule[2], cyclone::Vector3(40, 0, 0), &m_rule[3]);
+	//CreateLine(2, &m_rule[0], cyclone::Vector3(0, 0, 0), &m_rule[4]);
+	//CreateLine(4, &m_rule[0], cyclone::Vector3(0, 0, 0), &m_rule[4]);
 }
 
 Fireworks::~Fireworks()
@@ -28,27 +40,20 @@ void Fireworks::update(float duration)
 
 void Fireworks::handleFireworkSpawn(float duration)
 {
-	if (!wave1 && passedTime > 0.5f)
+	for (auto it = waves.begin(); it != waves.end();)
 	{
-		wave1 = true;
-		for (int i = 0; i < 5; i++)
-			create();
-	}
-
-	if (!wave2 && passedTime > 2.5f)
-	{
-		wave2 = true;
-		for (int i = 0; i < 10; i++)
-			create();
-	}
-
-	if (!wave3 && passedTime > 5.0f)
-	{
-		wave3 = true;
-		for (int i = 0; i < 16; i++)
-			create();
+		if (passedTime > it->triggerTime)
+		{
+			create(it->rule, &it->position, it->ruleParent);
+			it = waves.erase(it);
+		}
+		else
+		{
+			++it;
+		}
 	}
 }
+
 
 void Fireworks::handleDelete(float duration)
 {
@@ -79,10 +84,22 @@ void Fireworks::handleDelete(float duration)
 	}
 }
 
-void Fireworks::create()
+void Fireworks::create(FireworksRule *rule, cyclone::Vector3 *startPos, FireworksRule* parentRule)
 {
 	Fire *initFire = new Fire(0);
-	initFire->setRule(&m_rule[rand() % 4]);
+	if (!rule)
+		initFire->setRule(&m_rule[rand() % 4]);
+	else
+		initFire->setRule(rule);
+	if (startPos)
+		initFire->m_particle->setPosition(*startPos);
+	if (parentRule)
+	{
+		initFire->m_age = crandom.randomReal(parentRule->maxAge, parentRule->maxAge);
+		initFire->m_particle->setVelocity(crandom.randomVector(parentRule->minVelocity, parentRule->maxVelocity));
+		initFire->m_particle->setDamping(parentRule->damping);
+		initFire->m_color = parentRule->color;
+	}
 	fireworks.push_back(initFire);
 }
 
@@ -96,6 +113,7 @@ void Fireworks::create(Fire* parent)
 		childFire->m_particle->setVelocity(crandom.randomVector(parent->m_rule->minVelocity, parent->m_rule->maxVelocity));
 		childFire->m_particle->setDamping(parent->m_rule->damping);
 		childFire->m_particle->setPosition(parent->m_particle->getPosition());
+		childFire->m_color = parent->m_rule->color;
 
 		fireworks.push_back(childFire);
 	}
@@ -106,9 +124,45 @@ void Fireworks::draw(int shadow)
 	std::vector<Fire* >::iterator iter; //Fire container
 	for (iter = fireworks.begin(); iter != fireworks.end();) {
 		Fire* m = *iter;
-		m->draw(shadow);
+		if (!m->m_dead)
+			m->draw(shadow);
 		if (!shadow)
 			m->drawHistory();
 		++iter;
+	}
+}
+
+void Fireworks::CreateLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent)
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		float currentTime = triggerTime + 0.5f * i;
+		int xOffset = 50 - 5 * i;
+		waves.emplace_back(currentTime, rule, cyclone::Vector3(pos.x + xOffset, pos.y, pos.z), ruleParent);
+		waves.emplace_back(currentTime, rule, cyclone::Vector3(pos.x - xOffset, pos.y, pos.z), ruleParent);
+	}
+}
+
+void Fireworks::CreateRevertLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent)
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		float currentTime = triggerTime + 0.5f * i;
+		int xOffset = 5 * i;
+		waves.emplace_back(currentTime, rule, cyclone::Vector3(pos.x + xOffset, pos.y, pos.z), ruleParent);
+		waves.emplace_back(currentTime, rule, cyclone::Vector3(pos.x - xOffset, pos.y, pos.z), ruleParent);
+	}
+}
+
+void Fireworks::CreateZigZagLine(float triggerTime, FireworksRule* rule, const cyclone::Vector3& pos, FireworksRule* ruleParent)
+{
+	float timeInterval = 0.5f;
+	int offset = 5;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		float currentTime = triggerTime + timeInterval * i;
+		int xCoordinate = (i % 2 == 0) ? pos.x + offset * i : pos.x - offset * i;
+		waves.emplace_back(currentTime, rule, cyclone::Vector3(xCoordinate, pos.y, pos.z), ruleParent);
 	}
 }

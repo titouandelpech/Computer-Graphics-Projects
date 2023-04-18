@@ -3,12 +3,13 @@
 Fire::Fire(int type)
 {
 	m_type = type;
-	m_size = 1;
+	m_size = 0.2f;
 	m_age = crandom.randomReal(0.5f, 3.0f);
+	m_dead = false;
 	
 	m_particle = new cyclone::Particle();
 
-	m_particle->setPosition(crandom.randomReal(-5, 5), 10, crandom.randomReal(-5, 5));
+	m_particle->setPosition(crandom.randomReal(-5, 5), 0, crandom.randomReal(-5, 5));
 	m_particle->setVelocity(crandom.randomVector(cyclone::Vector3(-10, 20, -10), cyclone::Vector3(10, 50, 10)));
 	m_particle->setMass(1.0f);
 	m_particle->setDamping(0.99f);
@@ -29,7 +30,11 @@ bool Fire::update(float duration)
 	m_particle->integrate(duration);
 	m_age -= duration;
 
-	if (m_age < 0 || m_particle->getPosition().y < 0)
+	if (m_age < 0 || m_particle->getPosition().y < 0 && !m_dead)
+	{
+		m_dead = true;
+	}
+	if (m_dead && (m_history.size() == 0 || m_type == 0))
 		return true;
 	return false;
 }
@@ -58,6 +63,7 @@ void Fire::drawHistory()
 	glLineWidth(2.0f);
 	glPushMatrix();
 	glBegin(GL_LINE_STRIP);
+	glColor3f(m_color.x, m_color.y, m_color.z);
 	for (unsigned int i = 0; i < m_history.size(); i += 2) {
 		cyclone::Vector3 pos = m_history[i];
 		glVertex3f(pos.x, pos.y, pos.z);
@@ -75,11 +81,14 @@ void Fire::setRule(FireworksRule* r)
 
 void Fire::putHistory()
 {
-	if (m_history.size() < 30) {
+	if (m_history.size() < 30 && !m_dead) {
+		m_history.push_back(m_particle->getPosition());
+	}
+	else if (!m_dead) {
+		m_history.pop_front();
 		m_history.push_back(m_particle->getPosition());
 	}
 	else {
 		m_history.pop_front();
-		m_history.push_back(m_particle->getPosition());
 	}
 }

@@ -1,44 +1,47 @@
 ﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
-  Viewer.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Viewer.cpp(211,64): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-  timing.cpp
-  stdafx.cpp
-  MyGlWindow.cpp
-  MMatrix.cpp
-  main.cpp
-  FireworksRule.cpp
   Fireworks.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(91,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(95,40): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
-  Fire.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(7,28): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(43,42): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(43,31): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(43,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(47,47): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(47,35): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(47,23): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(63,31): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(63,24): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fire.cpp(63,17): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-  DrawUtils.cpp
-  3DUtils.cpp
-  world.cpp
-  random.cpp
-  pworld.cpp
-  plinks.cpp
-  pfgen.cpp
-  pcontacts.cpp
-  particle.cpp
-  joints.cpp
-  fgen.cpp
-  Génération de code en cours...
-  Compilation en cours...
-  core.cpp
-  contacts.cpp
-  collide_fine.cpp
-  collide_coarse.cpp
-  body.cpp
-  Génération de code en cours...
-body.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/SAFESEH'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(98,39): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(108,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(112,40): warning C4244: '=' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(165,19): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'int', perte possible de données
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\xmemory(682,68): warning C4244: 'argument' : conversion de '_Ty' en 'float', perte possible de données
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(840): message : voir la référence à l'instanciation de la fonction modèle 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,FireworksRule*,cyclone::Vector3,FireworksRule*>(_Alloc &,_Objty *const ,int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Alloc=std::allocator<Fireworks::Wave>,
+              _Ty=Fireworks::Wave,
+              _Objty=Fireworks::Wave
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(840): message : voir la référence à l'instanciation de la fonction modèle 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,FireworksRule*,cyclone::Vector3,FireworksRule*>(_Alloc &,_Objty *const ,int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Alloc=std::allocator<Fireworks::Wave>,
+              _Ty=Fireworks::Wave,
+              _Objty=Fireworks::Wave
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(822): message : voir la référence à l'instanciation de la fonction modèle '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Ty=Fireworks::Wave
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(822): message : voir la référence à l'instanciation de la fonction modèle '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Ty=Fireworks::Wave
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(904): message : voir la référence à l'instanciation de la fonction modèle '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_one_at_back<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Ty=Fireworks::Wave
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(904): message : voir la référence à l'instanciation de la fonction modèle '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_one_at_back<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
+          with
+          [
+              _Ty=Fireworks::Wave
+          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Fireworks.cpp(21): message : voir la référence à l'instanciation de la fonction modèle 'void std::vector<Fireworks::Wave,std::allocator<Fireworks::Wave>>::emplace_back<int,FireworksRule*,cyclone::Vector3,FireworksRule*>(int &&,FireworksRule *&&,cyclone::Vector3 &&,FireworksRule *&&)' en cours de compilation
   FrameWork.vcxproj -> C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\Fireworks\FrameWork\Debug\FrameWork.exe

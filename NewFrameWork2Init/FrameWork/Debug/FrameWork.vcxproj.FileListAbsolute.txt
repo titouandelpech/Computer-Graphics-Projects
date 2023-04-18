@@ -1,1 +1,2 @@
 C:\Users\titou\Downloads\Computer Programming\NewFrameWork2Init\FrameWork\Debug\FrameWork.exe
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Debug\FrameWork.exe

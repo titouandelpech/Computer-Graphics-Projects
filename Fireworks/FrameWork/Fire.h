@@ -30,6 +30,7 @@ public:
 	float m_size; // Fire size (0.5)
 	int m_type; //Fire type (set in the constructor)
 	float m_age; //Fire’s current age
+	bool m_dead; //if ball 
 	
 	cyclone::Particle* m_particle;
 
@@ -42,5 +43,3 @@ public:
 	void setRule(FireworksRule* r); //set a particular rule
 	void putHistory(); //Save current position in the m_history
 };
-
-static cyclone::Random crandom;

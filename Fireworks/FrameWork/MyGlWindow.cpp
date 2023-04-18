@@ -168,24 +168,24 @@ void MyGlWindow::draw()
     
  // Add a sphere to the scene.
 //Draw axises
-  glLineWidth(3.0f);
-  glBegin(GL_LINES);
-  glColor3f(1,0,0);
-
-  glVertex3f(0.0f,0.1f,0.0f);
-  glVertex3f(0.0f,100.0f,0.0f);
-
-  glColor3f(0.0f,11.0f,0.0f);
-
-  glVertex3d(0.0f,0.1f,0.0f);
-  glVertex3d(100.0f,0.1,0.0f);
-
-  glColor3f(0.0f,0.0f,1.0f);
-
-  glVertex3f(0.0f,0.1f,0.0f);
-  glVertex3f(0.0f,0.1f,100.0f);
-  glEnd();
-  glLineWidth(1.0f);
+  //glLineWidth(3.0f);
+  //glBegin(GL_LINES);
+  //glColor3f(1,0,0);
+  //
+  //glVertex3f(0.0f,0.1f,0.0f);
+  //glVertex3f(0.0f,100.0f,0.0f);
+  //
+  //glColor3f(0.0f,11.0f,0.0f);
+  //
+  //glVertex3d(0.0f,0.1f,0.0f);
+  //glVertex3d(100.0f,0.1,0.0f);
+  //
+  //glColor3f(0.0f,0.0f,1.0f);
+  //
+  //glVertex3f(0.0f,0.1f,0.0f);
+  //glVertex3f(0.0f,0.1f,100.0f);
+  //glEnd();
+  //glLineWidth(1.0f);
 
 
   //draw shadow
@@ -199,7 +199,6 @@ void MyGlWindow::draw()
   glPushMatrix();
   m_fireworks->draw(0);
   glPopMatrix();
-
 
 
   /////////////////////////
