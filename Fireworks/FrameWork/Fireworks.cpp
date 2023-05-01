@@ -67,7 +67,6 @@ Fireworks::Fireworks()
 	waves.emplace_back(45, &m_rule[10], cyclone::Vector3(-40, 0, 0), &m_rule[3]);
 	CreateCross(46, &m_rule[6], cyclone::Vector3(0, 0, 0), &m_rule[7]);
 	CreateCross(47.5f, &m_rule[6], cyclone::Vector3(0, 0, 0), &m_rule[7]);
-
 }
 
 Fireworks::~Fireworks()

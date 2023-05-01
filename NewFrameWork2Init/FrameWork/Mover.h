@@ -41,5 +41,6 @@ class Mover
 		void draw(int shadow);
 		void checkEdges();
 		void setConnection(Mover* a);
+		void setConnection(cyclone::Vector3* a);
 };
 #pragma once

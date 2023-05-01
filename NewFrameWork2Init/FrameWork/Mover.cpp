@@ -71,6 +71,7 @@ void Mover::draw(int shadow)
 {
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
+	const cyclone::Vector3* anchor = m_spring->getAnchor();
 
 	//if (!shadow)
 	//	glColor3f(1.0f, 0.0f, 0.0f);
@@ -79,8 +80,20 @@ void Mover::draw(int shadow)
 
 	glTranslatef(position.x, position.y, position.z);
 	glutSolidSphere(size, 30, 30);
-
+	
 	glPopMatrix(); // Add this line to isolate the transformation
+	
+	if (anchor != nullptr)
+	{
+		glColor3f(1, 1, 0);  //Line color
+		glLineWidth(3.0f);  //Line Width
+		glPushMatrix();
+		glBegin(GL_LINES);
+		glVertex3f(anchor->x, 0, anchor->z);  //Starting point
+		glVertex3f(anchor->x, anchor->y, anchor->z); //Ending point
+		glEnd();
+		glPopMatrix();
+	}
 
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
@@ -126,4 +139,9 @@ void Mover::checkEdges()
 void Mover::setConnection(Mover* a)
 {
 	m_spring = new cyclone::MySpring(a->m_particle, 20.0f, 3);
+}
+
+void Mover::setConnection(cyclone::Vector3* a)
+{
+	m_spring = new cyclone::MySpring(a, 5, 3);
 }
