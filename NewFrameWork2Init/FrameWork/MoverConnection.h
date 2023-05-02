@@ -13,5 +13,5 @@ public:
 	cyclone::ParticleForceRegistry* m_forces;
 	std::vector<Mover*> m_movers;
 	void update(float duration);
-	void draw(int shadow);
+	void draw(int shadow, int startI);
 };

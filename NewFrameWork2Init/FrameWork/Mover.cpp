@@ -2,7 +2,7 @@
 
 Mover::Mover()
 {
-	size = 1.5;
+	size = 3;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
 
@@ -12,18 +12,20 @@ Mover::Mover()
 	//m_particle->setDamping(0.99f); //damping
 	//m_particle->setAcceleration(0.0f, -1.0f, 0.0f);  //initial acc.
 
-	m_particle->setPosition(5, 20, 0);  //initial pos
+	m_particle->setPosition(5, 5, 0);  //initial pos
 	m_particle->setVelocity(0, 0, 0); //initial vel
-	m_particle->setMass(1.0f); //mass
-	m_particle->setDamping(1); //damping
+	m_particle->setMass(5.0f); //mass
+	m_particle->setDamping(0.7f); //damping
 	m_particle->setAcceleration(0, 0, 0);  //initial acc.
 
-	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3(0, -10, 0));
+	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3::GRAVITY);
 	m_drag = new cyclone::ParticleDrag(0.1, 0.1);
+	m_buoyancy = new cyclone::MyParticleBuoyancy(1, 1, 10, 2);
 
 	m_forces = new cyclone::ParticleForceRegistry();  //Container
-	m_forces->add(m_particle, m_gravity);
-	m_forces->add(m_particle, m_drag);
+	//m_forces->add(m_particle, m_gravity);
+	//m_forces->add(m_particle, m_drag);
+	m_forces->add(m_particle, m_buoyancy);
 
 	m_spring = NULL;
 }
@@ -51,6 +53,7 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 
 	m_forces = NULL;
 	m_spring = NULL;
+	m_buoyancy = NULL;
 	//m_forces = new cyclone::ParticleForceRegistry();  //Container
 	//m_forces->add(m_particle, m_gravity);
 	//m_forces->add(m_particle, m_drag);
@@ -71,7 +74,7 @@ void Mover::draw(int shadow)
 {
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
-	const cyclone::Vector3* anchor = m_spring->getAnchor();
+	const cyclone::Vector3* anchor = m_spring ? m_spring->getAnchor() : nullptr;
 
 	//if (!shadow)
 	//	glColor3f(1.0f, 0.0f, 0.0f);

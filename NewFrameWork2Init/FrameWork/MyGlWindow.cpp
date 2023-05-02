@@ -73,8 +73,8 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 
 	float aspect = (w / (float)h);
 	m_viewer = new Viewer(viewPoint, viewCenter, upVector, 45.0f, aspect);
-	//m_movers = std::vector<Mover *>();
-	//m_movers.push_back(new Mover());
+	m_movers = std::vector<Mover *>();
+	m_movers.push_back(new Mover());
 	m_moverConnection = new MoverConnection();
 
 	selected = -1;
@@ -191,31 +191,42 @@ void MyGlWindow::draw()
   glEnd();
   glLineWidth(1.0f);
 
- // for (unsigned int i = 0; i < m_movers.size(); i++) {
-
-	////draw shadow
-	//setupShadows();
-	//m_movers[i]->draw(1);
-	//unsetupShadows();
-	//
-	//glEnable(GL_LIGHTING);
-	//
-	////draw objects
-	//glPushMatrix();
-	//glLoadName(i + 1);
-	//m_movers[i]->draw(0);
-	//glPopMatrix();
- // }
+ for (unsigned int i = 0; i < m_movers.size(); i++) {
+	//draw shadow
+	setupShadows();
+	m_movers[i]->draw(1);
+	unsetupShadows();
+	
+	glEnable(GL_LIGHTING);
+	
+	//draw objects
+	glPushMatrix();
+	glLoadName(i + 1);
+	glColor3f(0.7f, 0.7f, 0);
+	m_movers[i]->draw(0);
+	glPopMatrix();
+ }
 
   setupShadows();
-  m_moverConnection->draw(1);
+  m_moverConnection->draw(1, m_movers.size());
   unsetupShadows();
 
   glEnable(GL_LIGHTING);
   
   glPushMatrix();
-  m_moverConnection->draw(0);
+  m_moverConnection->draw(0, m_movers.size());
   glPopMatrix();
+
+  //draw water
+  glDisable(GL_LIGHTING);
+  glEnable(GL_BLEND);
+  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+  glPushMatrix();
+  glColor4f(0, 0, 1, 0.2f);
+  glTranslatef(0, 5.0, 0);
+  drawCube(100, 10, 100);
+  glPopMatrix();
+
 
   /////////////////////////
   putText("mksung", 0, 0, 1, 1, 0);
@@ -228,10 +239,10 @@ void MyGlWindow::draw()
 
 void MyGlWindow::test()
 {
-	//for (unsigned int i = 0; i < m_movers.size(); i++) {
-	//	m_movers[i]->~Mover();
-	//	m_movers[i] = new Mover();
-	//}
+	for (unsigned int i = 0; i < m_movers.size(); i++) {
+		m_movers[i]->~Mover();
+		m_movers[i] = new Mover();
+	}
 	m_moverConnection->~MoverConnection();
 	m_moverConnection = new MoverConnection();
 }
@@ -244,11 +255,11 @@ void MyGlWindow::update()
 	if (!run) return;
 
 	float duration = (float)TimingData::get().lastFrameDuration * 0.003f;
-	//for (unsigned int i = 0; i < m_movers.size(); i++) {
-	//	if (m_movers[i]) {
-	//		m_movers[i]->update(duration);
-	//	}
-	//}
+	for (unsigned int i = 0; i < m_movers.size(); i++) {
+		if (m_movers[i]) {
+			m_movers[i]->update(duration);
+		}
+	}
 	m_moverConnection->update(duration);
 }
 
@@ -280,12 +291,12 @@ void MyGlWindow::doPick()
 	glPushName(0);
 
 	// draw the cubes, loading the names as we go
-	//for (int i = 0; i < m_movers.size(); i++)
-	//{
-	//	glLoadName(i + 1);
-	//	m_movers[i]->draw(0);
-	//}
-	m_moverConnection->draw(0);
+	for (int i = 0; i < m_movers.size(); i++)
+	{
+		glLoadName(i + 1);
+		m_movers[i]->draw(0);
+	}
+	m_moverConnection->draw(0, m_movers.size());
 
 	// go back to drawing mode, and see how picking did
 	int hits = glRenderMode(GL_RENDER);
@@ -352,7 +363,7 @@ int MyGlWindow::handle(int e)
 			 doPick();
 			 if (selected >= 0) {
 				 std::cout << "picked" << std::endl;
-				 p1selected = m_moverConnection->m_movers[selected]->m_particle->getPosition();
+				 p1selected = getSelectedBall(selected)->m_particle->getPosition();
 			 }
 		 }
 		 damage(1);
@@ -363,9 +374,9 @@ int MyGlWindow::handle(int e)
 	  m_pressedMouseButton = -1;
 	  if (selected != -1)
 	  {
-		  cyclone::Vector3 p2selected = m_moverConnection->m_movers[selected]->m_particle->getPosition();
+		  cyclone::Vector3 p2selected = getSelectedBall(selected)->m_particle->getPosition();
 		  cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
-		  m_moverConnection->m_movers[selected]->m_particle->setVelocity(newVelocity);
+		  getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
 		  
 		  selected = -1;
 
@@ -382,13 +393,13 @@ int MyGlWindow::handle(int e)
 
 			  double rx, ry, rz;
 			  mousePoleGo(r1x, r1y, r1z, r2x, r2y, r2z,
-				  static_cast<double>(m_moverConnection->m_movers[selected]->m_particle->getPosition().x),
-				  static_cast<double>(m_moverConnection->m_movers[selected]->m_particle->getPosition().y),
-				  static_cast<double>(m_moverConnection->m_movers[selected]->m_particle->getPosition().z),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().x),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().y),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().z),
 				  rx, ry, rz,
 				  (Fl::event_state() & FL_CTRL) != 0);
 			  damage(1);
-			  m_moverConnection->m_movers[selected]->m_particle->setPosition(rx, ry, rz);
+			  getSelectedBall(selected)->m_particle->setPosition(rx, ry, rz);
 
 		  } else {
 		      float fractionChangeX = static_cast<float>(Fl::event_x() - m_lastMouseX) / static_cast<float>(this->w());
@@ -420,6 +431,13 @@ int MyGlWindow::handle(int e)
   }
 }
 
+Mover* MyGlWindow::getSelectedBall(int selected)
+{
+	if (selected >= m_movers.size())
+		return m_moverConnection->m_movers[selected - m_movers.size()];
+	else
+		return m_movers[selected];
+}
 
 //
 // get the mouse in NDC

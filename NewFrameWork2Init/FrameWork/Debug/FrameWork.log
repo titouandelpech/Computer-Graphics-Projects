@@ -1,7 +1,10 @@
 ﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   main.cpp
   MySpring.cpp
+  MyParticleBuoyancy.cpp
   MyGlWindow.cpp
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(294,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(436,15): warning C4018: '>=' : incompatibilité signed/unsigned
   MoverConnection.cpp
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MoverConnection.cpp(48,25): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MoverConnection.cpp(48,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
@@ -10,13 +13,14 @@ C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\Fram
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MoverConnection.cpp(52,32): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MoverConnection.cpp(52,21): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
   Mover.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(81,47): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(81,35): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(81,23): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(92,34): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(92,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(93,42): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(93,31): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(93,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(84,47): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(84,35): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(84,23): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(95,34): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(95,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(96,42): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(96,31): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(96,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
   Génération de code en cours...
+body.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/SAFESEH'
   FrameWork.vcxproj -> C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Debug\FrameWork.exe

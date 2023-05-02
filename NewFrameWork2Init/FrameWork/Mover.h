@@ -20,6 +20,7 @@
 #include "pfgen.h"
 
 #include "MySpring.h"
+#include "MyParticleBuoyancy.h"
 
 class Mover
 {
@@ -27,6 +28,7 @@ class Mover
 		float size;
 		cyclone::Particle *m_particle;
 		cyclone::MySpring* m_spring;
+		cyclone::MyParticleBuoyancy* m_buoyancy;
 		bool has_collisions;
 	
 		cyclone::ParticleGravity *m_gravity;

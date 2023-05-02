@@ -44,11 +44,12 @@ class MyGlWindow : public Fl_Gl_Window {
 		
 		float fieldOfView;
 		Viewer *m_viewer;
-		//std::vector<Mover *> m_movers;
+		std::vector<Mover *> m_movers;
 		MoverConnection *m_moverConnection;
 		cyclone::Vector3 p1selected;
 		void setProjection(int clearProjection = 1);
 		void getMouseNDC(float& x, float& y);
 		void setupLight(float x, float y, float z);
+		Mover *getSelectedBall(int selected);
 };
 
