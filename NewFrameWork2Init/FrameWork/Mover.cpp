@@ -2,7 +2,7 @@
 
 Mover::Mover()
 {
-	size = 3;
+	size = 2;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
 
@@ -15,7 +15,7 @@ Mover::Mover()
 	m_particle->setPosition(5, 5, 0);  //initial pos
 	m_particle->setVelocity(0, 0, 0); //initial vel
 	m_particle->setMass(5.0f); //mass
-	m_particle->setDamping(0.7f); //damping
+	m_particle->setDamping(0.9f); //damping
 	m_particle->setAcceleration(0, 0, 0);  //initial acc.
 
 	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3::GRAVITY);
@@ -23,9 +23,9 @@ Mover::Mover()
 	m_buoyancy = new cyclone::MyParticleBuoyancy(1, 1, 10, 2);
 
 	m_forces = new cyclone::ParticleForceRegistry();  //Container
-	//m_forces->add(m_particle, m_gravity);
+	m_forces->add(m_particle, m_gravity);
 	//m_forces->add(m_particle, m_drag);
-	m_forces->add(m_particle, m_buoyancy);
+	//m_forces->add(m_particle, m_buoyancy);
 
 	m_spring = NULL;
 }
@@ -67,7 +67,7 @@ void Mover::update(float duration)
 	if (m_forces != NULL)
 		m_forces->updateForces(duration);
 	m_particle->integrate(duration);
-	if (has_collisions) checkEdges();
+	//if (has_collisions) checkEdges();
 }
 
 void Mover::draw(int shadow)

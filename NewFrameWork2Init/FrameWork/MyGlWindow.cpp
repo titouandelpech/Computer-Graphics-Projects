@@ -1,8 +1,4 @@
-
-
 #include "MyGlWindow.h"
-
-
 
 #include <iostream>
 #include "drawUtils.h"
@@ -31,7 +27,6 @@ void drawStrokeText(char* string, int x, int y, int z)
 
 void MyGlWindow::putText(char* string, int x, int y, float r, float g, float b)
 {
-
 	glDisable(GL_LIGHTING);
 
 	glMatrixMode(GL_PROJECTION);
@@ -40,7 +35,6 @@ void MyGlWindow::putText(char* string, int x, int y, float r, float g, float b)
 	glLoadIdentity();
 
 	ortho();
-
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -51,8 +45,6 @@ void MyGlWindow::putText(char* string, int x, int y, float r, float g, float b)
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
-
-
 }
 
 
@@ -62,7 +54,6 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
   Fl_Gl_Window(x,y,w,h)
 //==========================================================================
 {
-    
     mode( FL_RGB|FL_ALPHA|FL_DOUBLE | FL_STENCIL );
  	
 	fieldOfView = 45;
@@ -77,19 +68,28 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 	m_movers.push_back(new Mover());
 	m_moverConnection = new MoverConnection();
 
+	cyclone::MyGroundContact* c = new cyclone::MyGroundContact();
+	for each (Mover * m in m_movers) {
+		c->init(m->m_particle, m->size);
+	}
+	for each (Mover * m in m_moverConnection->m_movers) {
+		c->init(m->m_particle, m->size);
+	}
+	m_contactGenerators.push_back(c);
+	m_resolver = new cyclone::ParticleContactResolver(1);
+
 	selected = -1;
+	maxPossibleContact = 1;
 
 //	glutInit(0,0);
 
 	TimingData::init();
 	run = 0;
-
 }
 
 
   void MyGlWindow::setupLight(float x, float y, float z)
   {
-	  
 	  // set up the lighting
 	  GLfloat lightPosition[] = {500.0f, 900.0f, 500.0f, 1.0f};
 	  GLfloat lightPosition2[] = {1, 0, 0, 0};
@@ -218,14 +218,14 @@ void MyGlWindow::draw()
   glPopMatrix();
 
   //draw water
-  glDisable(GL_LIGHTING);
+  /*glDisable(GL_LIGHTING);
   glEnable(GL_BLEND);
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
   glPushMatrix();
   glColor4f(0, 0, 1, 0.2f);
   glTranslatef(0, 5.0, 0);
   drawCube(100, 10, 100);
-  glPopMatrix();
+  glPopMatrix();*/
 
 
   /////////////////////////
@@ -234,7 +234,6 @@ void MyGlWindow::draw()
   setProjection();
 
  //glEnable(GL_COLOR_MATERIAL);
-
 }
 
 void MyGlWindow::test()
@@ -245,11 +244,22 @@ void MyGlWindow::test()
 	}
 	m_moverConnection->~MoverConnection();
 	m_moverConnection = new MoverConnection();
+
+	m_contactGenerators.clear();
+
+	cyclone::MyGroundContact* c = new cyclone::MyGroundContact();
+	for each (Mover * m in m_movers) {
+		c->init(m->m_particle, m->size);
+	}
+	for each (Mover * m in m_moverConnection->m_movers) {
+		c->init(m->m_particle, m->size);
+	}
+
+	m_contactGenerators.push_back(c);
 }
 
 void MyGlWindow::update()
 {
-
 	TimingData::get().update();
 
 	if (!run) return;
@@ -261,6 +271,23 @@ void MyGlWindow::update()
 		}
 	}
 	m_moverConnection->update(duration);
+
+	unsigned limit = maxPossibleContact; //1 : why? we have only 1 floor and 1 particle
+	cyclone::ParticleContact* nextContact = m_contact; //cyclone::ParticleContact starting pointer
+	for (std::vector<cyclone::ParticleContactGenerator*>::iterator g = m_contactGenerators.begin(); g != m_contactGenerators.end(); g++)
+	{
+		unsigned used = (*g)->addContact(nextContact, limit); //# of solved collision is saved in used
+		limit -= used; //subtract limit by used
+		nextContact += used; //move the pointer
+		if (limit <= 0) break; //if nothing left, then return
+	}
+	int num = maxPossibleContact - limit; //how many collision are solved?
+
+	if (num > 0)
+	{
+		//For multiple contacts, set the max. iteration to (num) *2 
+		m_resolver->setIterations(num * 2);
+		m_resolver->resolveContacts(m_contact, num, duration);	}
 }
 
 

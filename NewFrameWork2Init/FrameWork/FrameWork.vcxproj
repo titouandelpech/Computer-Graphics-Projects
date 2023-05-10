@@ -118,6 +118,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MMatrix.cpp" />
     <ClCompile Include="MoverConnection.cpp" />
+    <ClCompile Include="MyContact.cpp" />
     <ClCompile Include="MyGlWindow.cpp" />
     <ClCompile Include="Mover.cpp" />
     <ClCompile Include="MyParticleBuoyancy.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="MMatrix.H" />
     <ClInclude Include="Mover.h" />
     <ClInclude Include="MoverConnection.h" />
+    <ClInclude Include="MyContact.h" />
     <ClInclude Include="MyGlWindow.h" />
     <ClInclude Include="MyParticleBuoyancy.h" />
     <ClInclude Include="MySpring.h" />

@@ -19,6 +19,7 @@
 #include "core.h"
 #include "Mover.h"
 #include "MoverConnection.h"
+#include "MyContact.h"
 #include <FL/Fl_Light_Button.H>
 
 class MyGlWindow : public Fl_Gl_Window {
@@ -39,7 +40,6 @@ class MyGlWindow : public Fl_Gl_Window {
 	private:
 		void draw();					// standard FlTk
 		
-		
 		int handle(int);				// standard FlTk
 		
 		float fieldOfView;
@@ -51,5 +51,12 @@ class MyGlWindow : public Fl_Gl_Window {
 		void getMouseNDC(float& x, float& y);
 		void setupLight(float x, float y, float z);
 		Mover *getSelectedBall(int selected);
+
+		cyclone::ParticleContact m_contact[2]; //maximum #of collisions possible = 2
+		//Container for MyGroundContact
+		std::vector<cyclone::ParticleContactGenerator*> m_contactGenerators;
+		//Collision resolver(calculate impulse and change velocity and positions)
+		cyclone::ParticleContactResolver* m_resolver;
+		int maxPossibleContact;
 };
 
