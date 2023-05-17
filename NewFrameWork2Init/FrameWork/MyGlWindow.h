@@ -20,7 +20,13 @@
 #include "Mover.h"
 #include "MoverConnection.h"
 #include "MyContact.h"
+#include "ParticleCollision.h"
 #include <FL/Fl_Light_Button.H>
+#include <pworld.h>
+
+const int CABLE_COUNT = 10;
+const int ROD_COUNT = 6;
+const int SUPPORT_COUNT = 12;
 
 class MyGlWindow : public Fl_Gl_Window {
 	public:
@@ -38,7 +44,11 @@ class MyGlWindow : public Fl_Gl_Window {
 		void test();
 		Fl_Light_Button* ui;
 	private:
+		void initMovers();
+		void getParticles(Mover* m);
 		void draw();					// standard FlTk
+
+		void drawBridge(int shadow);
 		
 		int handle(int);				// standard FlTk
 		
@@ -46,17 +56,24 @@ class MyGlWindow : public Fl_Gl_Window {
 		Viewer *m_viewer;
 		std::vector<Mover *> m_movers;
 		MoverConnection *m_moverConnection;
+		cyclone::ParticleWorld *m_world;
 		cyclone::Vector3 p1selected;
+		cyclone::Vector3 prevPoint;
 		void setProjection(int clearProjection = 1);
 		void getMouseNDC(float& x, float& y);
 		void setupLight(float x, float y, float z);
 		Mover *getSelectedBall(int selected);
 
-		cyclone::ParticleContact m_contact[2]; //maximum #of collisions possible = 2
+		cyclone::ParticleContact m_contact[3]; //maximum #of collisions possible
 		//Container for MyGroundContact
 		std::vector<cyclone::ParticleContactGenerator*> m_contactGenerators;
 		//Collision resolver(calculate impulse and change velocity and positions)
 		cyclone::ParticleContactResolver* m_resolver;
 		int maxPossibleContact;
-};
 
+		//bridge
+		std::vector<cyclone::Particle*> m_particleArray;
+		cyclone::ParticleCable cables[CABLE_COUNT];
+		cyclone::ParticleRod rods[ROD_COUNT];
+		cyclone::ParticleCableConstraint supports[SUPPORT_COUNT];
+};

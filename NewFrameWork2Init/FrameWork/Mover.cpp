@@ -22,12 +22,15 @@ Mover::Mover()
 	m_drag = new cyclone::ParticleDrag(0.1, 0.1);
 	m_buoyancy = new cyclone::MyParticleBuoyancy(1, 1, 10, 2);
 
-	m_forces = new cyclone::ParticleForceRegistry();  //Container
+	m_forces = new cyclone::ParticleForceRegistry();
 	m_forces->add(m_particle, m_gravity);
+	m_forces_list.push_back(m_gravity);
 	//m_forces->add(m_particle, m_drag);
+	//m_forces_list.push_back(m_drag);
 	//m_forces->add(m_particle, m_buoyancy);
+	//m_forces_list.push_back(m_buoyancy);
 
-	m_spring = NULL;
+	m_spring = nullptr;
 }
 
 Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, float damping)
@@ -51,12 +54,15 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3(0, -10, 0));
 	m_drag = new cyclone::ParticleDrag(0.1, 0.1);
 
-	m_forces = NULL;
-	m_spring = NULL;
-	m_buoyancy = NULL;
-	//m_forces = new cyclone::ParticleForceRegistry();  //Container
-	//m_forces->add(m_particle, m_gravity);
+	m_spring = nullptr;
+	m_buoyancy = nullptr;
+
+	//m_forces = nullptr;
+	m_forces = new cyclone::ParticleForceRegistry();
+	m_forces->add(m_particle, m_gravity);
+	m_forces_list.push_back(m_gravity);
 	//m_forces->add(m_particle, m_drag);
+	//m_forces_list.push_back(m_drag);
 }
 
 void Mover::update(float duration)
@@ -64,7 +70,7 @@ void Mover::update(float duration)
 	cyclone::Vector3 wind(1.0f, 0, 0);  //Wind blows in x direction
 	//m_particle->addForce(wind);
 
-	if (m_forces != NULL)
+	if (m_forces != nullptr)
 		m_forces->updateForces(duration);
 	m_particle->integrate(duration);
 	//if (has_collisions) checkEdges();

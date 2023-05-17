@@ -123,6 +123,7 @@
     <ClCompile Include="Mover.cpp" />
     <ClCompile Include="MyParticleBuoyancy.cpp" />
     <ClCompile Include="MySpring.cpp" />
+    <ClCompile Include="ParticleCollision.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="timing.cpp" />
     <ClCompile Include="Viewer.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="MyGlWindow.h" />
     <ClInclude Include="MyParticleBuoyancy.h" />
     <ClInclude Include="MySpring.h" />
+    <ClInclude Include="ParticleCollision.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timing.h" />
     <ClInclude Include="Vec3f.h" />

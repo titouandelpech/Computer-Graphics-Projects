@@ -33,7 +33,7 @@ unsigned cyclone::MyGroundContact::addContact(cyclone::ParticleContact* contact,
 			contact->restitution = 1.0;
 
 			count++;
-			//contact++;
+			contact++;
 			if (count >= limit) return count;
 		}
 	}

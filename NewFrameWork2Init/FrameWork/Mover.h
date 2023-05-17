@@ -34,6 +34,7 @@ class Mover
 		cyclone::ParticleGravity *m_gravity;
 		cyclone::ParticleDrag *m_drag;
 		cyclone::ParticleForceRegistry* m_forces;
+		std::vector<cyclone::ParticleForceGenerator *> m_forces_list;
 
 		Mover();
 		Mover(cyclone::Vector3, cyclone::Vector3, float, float);

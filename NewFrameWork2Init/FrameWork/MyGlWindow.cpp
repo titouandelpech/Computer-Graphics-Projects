@@ -64,22 +64,12 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 
 	float aspect = (w / (float)h);
 	m_viewer = new Viewer(viewPoint, viewCenter, upVector, 45.0f, aspect);
-	m_movers = std::vector<Mover *>();
-	m_movers.push_back(new Mover());
-	m_moverConnection = new MoverConnection();
-
-	cyclone::MyGroundContact* c = new cyclone::MyGroundContact();
-	for each (Mover * m in m_movers) {
-		c->init(m->m_particle, m->size);
-	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		c->init(m->m_particle, m->size);
-	}
-	m_contactGenerators.push_back(c);
 	m_resolver = new cyclone::ParticleContactResolver(1);
 
+	initMovers();
+
 	selected = -1;
-	maxPossibleContact = 1;
+	maxPossibleContact = 3;
 
 //	glutInit(0,0);
 
@@ -87,6 +77,100 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 	run = 0;
 }
 
+void MyGlWindow::initMovers()
+{
+	m_movers = std::vector<Mover*>();
+	//m_movers.push_back(new Mover());
+	m_moverConnection = new MoverConnection();
+
+	for (unsigned int i = 0; i < m_movers.size(); i++) {
+		m_movers[i] = new Mover();
+	}
+	m_moverConnection = new MoverConnection();
+
+	//collision with the ground
+	cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
+	for each (Mover * m in m_movers) {
+		myGroundContact->init(m->m_particle, m->size);
+	}
+	for each (Mover * m in m_moverConnection->m_movers) {
+		myGroundContact->init(m->m_particle, m->size);
+	}
+	m_contactGenerators.push_back(myGroundContact);
+
+	//collision between particles
+	//cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
+	//myParticleCollisions->particle[0] = m_moverConnection->m_movers[0]->m_particle;
+	//myParticleCollisions->particle[1] = m_moverConnection->m_movers[1]->m_particle;
+	//myParticleCollisions->size = m_moverConnection->m_movers[0]->size;
+	//m_contactGenerators.push_back(myParticleCollisions);
+
+	//particle world
+	m_world = new cyclone::ParticleWorld(12*10);
+	for each (Mover * m in m_movers) {
+		getParticles(m);
+	}
+	for each (Mover * m in m_moverConnection->m_movers) {
+		getParticles(m);
+	}
+	m_world->getContactGenerators().push_back(myGroundContact);
+	//m_world->getContactGenerators().push_back(myParticleCollisions);
+
+
+
+	//bridge
+	m_particleArray = std::vector<cyclone::Particle*>(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_particleArray[i] = new cyclone::Particle();
+		m_particleArray[i]->setPosition(-5 + (2 * (i / 2)), 8, (i % 2 == 0) ? 1 : -1);
+		m_particleArray[i]->setVelocity(0, 0, 0);
+		m_particleArray[i]->setDamping(0.8f);
+		m_particleArray[i]->setMass(5.0f);
+		m_particleArray[i]->setAcceleration(cyclone::Vector3::GRAVITY);
+		m_particleArray[i]->clearAccumulator();
+		m_world->getParticles().push_back(m_particleArray[i]);
+	}
+	for (int i = 0; i < CABLE_COUNT; i++)
+	{
+		cables[i].particle[0] = m_particleArray[i];
+		cables[i].particle[1] = m_particleArray[i + 2];
+		cables[i].maxLength = 3.0f;
+		cables[i].restitution = 0.1f;
+		m_world->getContactGenerators().push_back(&cables[i]);
+	}
+	for (int i = 0; i < ROD_COUNT; i++)
+	{
+		rods[i].particle[0] = m_particleArray[2 * i];
+		rods[i].particle[1] = m_particleArray[2 * i + 1];
+		rods[i].length = 2;
+		m_world->getContactGenerators().push_back(&rods[i]);
+	}
+	for (int i = 0; i < SUPPORT_COUNT; i++)
+	{
+		supports[i].particle = m_particleArray[i];
+		cyclone::Vector3 supportAnchor = m_particleArray[i]->getPosition();
+		supportAnchor.y += 3;
+		supports[i].anchor = supportAnchor;
+		if (i > 3 && i < 8)
+			supports[i].maxLength = 4.0f;
+		else if (i == 2 || i == 3 || i == 8 || i == 9)
+			supports[i].maxLength = 3.5f;
+		else
+			supports[i].maxLength = 3.0f;
+		supports[i].restitution = 0.5f;
+		m_world->getContactGenerators().push_back(&supports[i]);
+	}
+}
+
+void MyGlWindow::getParticles(Mover *m)
+{
+	m_world->getParticles().push_back(m->m_particle);
+	for each (cyclone::ParticleForceGenerator *force in m->m_forces_list)
+		m_world->getForceRegistry().add(m->m_particle, force);
+	if (m->m_spring != nullptr)
+		m_world->getForceRegistry().add(m->m_particle, m->m_spring);
+}
 
   void MyGlWindow::setupLight(float x, float y, float z)
   {
@@ -228,6 +312,19 @@ void MyGlWindow::draw()
   glPopMatrix();*/
 
 
+
+  setupShadows();
+  drawBridge(1);
+  unsetupShadows();
+
+  glEnable(GL_LIGHTING);
+
+  glPushMatrix();
+  drawBridge(0);
+  glPopMatrix();
+
+
+
   /////////////////////////
   putText("mksung", 0, 0, 1, 1, 0);
 
@@ -236,26 +333,87 @@ void MyGlWindow::draw()
  //glEnable(GL_COLOR_MATERIAL);
 }
 
+void MyGlWindow::drawBridge(int shadow)
+{
+	glLineWidth(3.0);
+
+	if (shadow)
+		glColor3f(0.2, 0.2, 0.2);
+	else
+		glColor3f(0.8, 0, 0);
+
+	int name = 1;
+	cyclone::ParticleWorld::Particles& particles = m_world->getParticles();
+	for (cyclone::ParticleWorld::Particles::iterator p = particles.begin();
+		p != particles.end();
+		p++)
+	{
+		cyclone::Particle* particle = *p;
+		const cyclone::Vector3& pos = particle->getPosition();
+		glPushMatrix();
+		glTranslatef(pos.x, pos.y, pos.z);
+		if (!shadow)
+			glLoadName(name);
+		glutSolidSphere(0.2f, 20, 10);
+		glPopMatrix();
+		name++;
+	}
+
+	glBegin(GL_LINES);
+
+	if (shadow)
+		glColor3f(0.2, 0.2, 0.2);
+	else
+		glColor3f(0, 0, 1);
+	for (unsigned i = 0; i < ROD_COUNT; i++)
+	{
+		cyclone::Particle** particles = rods[i].particle;
+		const cyclone::Vector3& p0 = particles[0]->getPosition();
+		const cyclone::Vector3& p1 = particles[1]->getPosition();
+		glVertex3f(p0.x, p0.y, p0.z);
+		glVertex3f(p1.x, p1.y, p1.z);
+	}
+
+	if (shadow)
+		glColor3f(0.2, 0.2, 0.2);
+	else
+		glColor3f(0, 1, 0);
+	for (unsigned i = 0; i < CABLE_COUNT; i++)
+	{
+		cyclone::Particle** particles = cables[i].particle;
+		const cyclone::Vector3& p0 = particles[0]->getPosition();
+		const cyclone::Vector3& p1 = particles[1]->getPosition();
+		glVertex3f(p0.x, p0.y, p0.z);
+		glVertex3f(p1.x, p1.y, p1.z);
+	}
+
+	if (shadow)
+		glColor3f(0.2, 0.2, 0.2);
+	else
+		glColor3f(0.7f, 0.7f, 0.7f);
+	for (unsigned i = 0; i < SUPPORT_COUNT; i++)
+	{
+		const cyclone::Vector3& p0 = supports[i].particle->getPosition();
+		const cyclone::Vector3& p1 = supports[i].anchor;
+		glVertex3f(p0.x, p0.y, p0.z);
+		glVertex3f(p1.x, p1.y, p1.z);
+	}
+	glEnd();
+
+	glLineWidth(1.0);
+}
+
 void MyGlWindow::test()
 {
 	for (unsigned int i = 0; i < m_movers.size(); i++) {
 		m_movers[i]->~Mover();
-		m_movers[i] = new Mover();
 	}
 	m_moverConnection->~MoverConnection();
-	m_moverConnection = new MoverConnection();
-
 	m_contactGenerators.clear();
+	m_world->getParticles().clear();
+	m_world->getContactGenerators().clear();
 
-	cyclone::MyGroundContact* c = new cyclone::MyGroundContact();
-	for each (Mover * m in m_movers) {
-		c->init(m->m_particle, m->size);
-	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		c->init(m->m_particle, m->size);
-	}
-
-	m_contactGenerators.push_back(c);
+	initMovers();
 }
 
 void MyGlWindow::update()
@@ -265,29 +423,33 @@ void MyGlWindow::update()
 	if (!run) return;
 
 	float duration = (float)TimingData::get().lastFrameDuration * 0.003f;
-	for (unsigned int i = 0; i < m_movers.size(); i++) {
-		if (m_movers[i]) {
-			m_movers[i]->update(duration);
-		}
-	}
-	m_moverConnection->update(duration);
+	
+	m_world->runPhysics(duration);
 
-	unsigned limit = maxPossibleContact; //1 : why? we have only 1 floor and 1 particle
-	cyclone::ParticleContact* nextContact = m_contact; //cyclone::ParticleContact starting pointer
-	for (std::vector<cyclone::ParticleContactGenerator*>::iterator g = m_contactGenerators.begin(); g != m_contactGenerators.end(); g++)
-	{
-		unsigned used = (*g)->addContact(nextContact, limit); //# of solved collision is saved in used
-		limit -= used; //subtract limit by used
-		nextContact += used; //move the pointer
-		if (limit <= 0) break; //if nothing left, then return
-	}
-	int num = maxPossibleContact - limit; //how many collision are solved?
-
-	if (num > 0)
-	{
-		//For multiple contacts, set the max. iteration to (num) *2 
-		m_resolver->setIterations(num * 2);
-		m_resolver->resolveContacts(m_contact, num, duration);	}
+	//----------------- OLD CODE -------------------
+	//for (unsigned int i = 0; i < m_movers.size(); i++) {
+	//	if (m_movers[i]) {
+	//		m_movers[i]->update(duration);
+	//	}
+	//}
+	//m_moverConnection->update(duration);
+	//
+	//unsigned limit = maxPossibleContact;
+	//cyclone::ParticleContact* nextContact = m_contact; //cyclone::ParticleContact starting pointer
+	//for (std::vector<cyclone::ParticleContactGenerator*>::iterator g = m_contactGenerators.begin(); g != m_contactGenerators.end(); g++)
+	//{
+	//	unsigned used = (*g)->addContact(nextContact, limit); //# of solved collision is saved in used
+	//	limit -= used; //subtract limit by used
+	//	nextContact += used; //move the pointer
+	//	if (limit <= 0) break; //if nothing left, then return
+	//}
+	//int num = maxPossibleContact - limit; //how many collision are solved?
+	//
+	//if (num > 0)
+	//{
+	//	//For multiple contacts, set the max. iteration to (num) *2 
+	//	m_resolver->setIterations(num * 2);
+	//	m_resolver->resolveContacts(m_contact, num, duration);	//}
 }
 
 
@@ -324,6 +486,7 @@ void MyGlWindow::doPick()
 		m_movers[i]->draw(0);
 	}
 	m_moverConnection->draw(0, m_movers.size());
+	drawBridge(0);
 
 	// go back to drawing mode, and see how picking did
 	int hits = glRenderMode(GL_RENDER);
@@ -390,7 +553,7 @@ int MyGlWindow::handle(int e)
 			 doPick();
 			 if (selected >= 0) {
 				 std::cout << "picked" << std::endl;
-				 p1selected = getSelectedBall(selected)->m_particle->getPosition();
+				 p1selected = m_particleArray[selected]->getPosition();//p1selected = getSelectedBall(selected)->m_particle->getPosition();
 			 }
 		 }
 		 damage(1);
@@ -401,10 +564,14 @@ int MyGlWindow::handle(int e)
 	  m_pressedMouseButton = -1;
 	  if (selected != -1)
 	  {
-		  cyclone::Vector3 p2selected = getSelectedBall(selected)->m_particle->getPosition();
-		  cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
-		  getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
+		  //cyclone::Vector3 p2selected = m_particleArray[selected]->getPosition();//cyclone::Vector3 p2selected = getSelectedBall(selected)->m_particle->getPosition();
+		  //cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
+		  //m_particleArray[selected]->setVelocity(newVelocity);//getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
 		  
+		  //####### change particle velocity
+		  prevPoint = cyclone::Vector3();
+		  //#######
+
 		  selected = -1;
 
 		  run = 1;
@@ -420,13 +587,23 @@ int MyGlWindow::handle(int e)
 
 			  double rx, ry, rz;
 			  mousePoleGo(r1x, r1y, r1z, r2x, r2y, r2z,
-				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().x),
-				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().y),
-				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().z),
+				  static_cast<double>(m_particleArray[selected]->getPosition().x),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().x),
+				  static_cast<double>(m_particleArray[selected]->getPosition().y),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().y),
+				  static_cast<double>(m_particleArray[selected]->getPosition().z),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().z),
 				  rx, ry, rz,
 				  (Fl::event_state() & FL_CTRL) != 0);
 			  damage(1);
-			  getSelectedBall(selected)->m_particle->setPosition(rx, ry, rz);
+
+			  //####### change particle velocity
+			  cyclone::Vector3 v(rx, ry, rz);
+			  if (prevPoint.magnitude() > 0)
+				  m_particleArray[selected]->setVelocity((v - prevPoint) * 40.0);
+			  prevPoint.x = rx;
+			  prevPoint.y = ry;
+			  prevPoint.z = rz;
+			  //#######
+
+			  //m_particleArray[selected]->setPosition(rx, ry, rz);//getSelectedBall(selected)->m_particle->setPosition(rx, ry, rz);
 
 		  } else {
 		      float fractionChangeX = static_cast<float>(Fl::event_x() - m_lastMouseX) / static_cast<float>(this->w());
