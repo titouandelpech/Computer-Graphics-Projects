@@ -77,26 +77,54 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 	run = 0;
 }
 
+const float degrees2Radians = 3.141592f / 180;
+
+cyclone::Quaternion generateQuaternion(float degrees, const cyclone::Vector3& axis) {
+	cyclone::Quaternion orientation;
+
+	float angle = degrees * degrees2Radians * 0.5f;
+
+	orientation.r = cos(angle);
+	cyclone::Vector3 v = axis * sin(angle);
+	orientation.i = v.x;
+	orientation.j = v.y;
+	orientation.k = v.z;
+
+	orientation.normalise();
+
+	return orientation;
+}
+
 void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
-	//m_movers.push_back(new Mover());
-	m_moverConnection = new MoverConnection();
 
-	for (unsigned int i = 0; i < m_movers.size(); i++) {
-		m_movers[i] = new Mover();
-	}
+	Mover* a = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+	Mover* b = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+	Mover* c = new Mover(cyclone::Vector3(0, 3, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+
+	//Must input a 1/2 angle that you want to rotate
+	a->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
+	b->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
+	c->orientation = generateQuaternion(45, cyclone::Vector3(1, 1, 0));
+	m_movers.push_back(a);
+	m_movers.push_back(b);
+	m_movers.push_back(c);
+	
+	//for (unsigned int i = 0; i < m_movers.size(); i++) {
+	//	m_movers[i] = new Mover();
+	//}
 	m_moverConnection = new MoverConnection();
 
 	//collision with the ground
-	cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
-	for each (Mover * m in m_movers) {
-		myGroundContact->init(m->m_particle, m->size);
-	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		myGroundContact->init(m->m_particle, m->size);
-	}
-	m_contactGenerators.push_back(myGroundContact);
+	//cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
+	//for each (Mover * m in m_movers) {
+	//	myGroundContact->init(m->m_particle, m->size);
+	//}
+	//for each (Mover * m in m_moverConnection->m_movers) {
+	//	myGroundContact->init(m->m_particle, m->size);
+	//}
+	//m_contactGenerators.push_back(myGroundContact);
 
 	//collision between particles
 	//cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
@@ -113,54 +141,52 @@ void MyGlWindow::initMovers()
 	for each (Mover * m in m_moverConnection->m_movers) {
 		getParticles(m);
 	}
-	m_world->getContactGenerators().push_back(myGroundContact);
+	//m_world->getContactGenerators().push_back(myGroundContact);
 	//m_world->getContactGenerators().push_back(myParticleCollisions);
 
-
-
 	//bridge
-	m_particleArray = std::vector<cyclone::Particle*>(12);
-	for (int i = 0; i < 12; i++)
-	{
-		m_particleArray[i] = new cyclone::Particle();
-		m_particleArray[i]->setPosition(-5 + (2 * (i / 2)), 8, (i % 2 == 0) ? 1 : -1);
-		m_particleArray[i]->setVelocity(0, 0, 0);
-		m_particleArray[i]->setDamping(0.8f);
-		m_particleArray[i]->setMass(5.0f);
-		m_particleArray[i]->setAcceleration(cyclone::Vector3::GRAVITY);
-		m_particleArray[i]->clearAccumulator();
-		m_world->getParticles().push_back(m_particleArray[i]);
-	}
-	for (int i = 0; i < CABLE_COUNT; i++)
-	{
-		cables[i].particle[0] = m_particleArray[i];
-		cables[i].particle[1] = m_particleArray[i + 2];
-		cables[i].maxLength = 3.0f;
-		cables[i].restitution = 0.1f;
-		m_world->getContactGenerators().push_back(&cables[i]);
-	}
-	for (int i = 0; i < ROD_COUNT; i++)
-	{
-		rods[i].particle[0] = m_particleArray[2 * i];
-		rods[i].particle[1] = m_particleArray[2 * i + 1];
-		rods[i].length = 2;
-		m_world->getContactGenerators().push_back(&rods[i]);
-	}
-	for (int i = 0; i < SUPPORT_COUNT; i++)
-	{
-		supports[i].particle = m_particleArray[i];
-		cyclone::Vector3 supportAnchor = m_particleArray[i]->getPosition();
-		supportAnchor.y += 3;
-		supports[i].anchor = supportAnchor;
-		if (i > 3 && i < 8)
-			supports[i].maxLength = 4.0f;
-		else if (i == 2 || i == 3 || i == 8 || i == 9)
-			supports[i].maxLength = 3.5f;
-		else
-			supports[i].maxLength = 3.0f;
-		supports[i].restitution = 0.5f;
-		m_world->getContactGenerators().push_back(&supports[i]);
-	}
+	//m_particleArray = std::vector<cyclone::Particle*>(12);
+	//for (int i = 0; i < 12; i++)
+	//{
+	//	m_particleArray[i] = new cyclone::Particle();
+	//	m_particleArray[i]->setPosition(-5 + (2 * (i / 2)), 8, (i % 2 == 0) ? 1 : -1);
+	//	m_particleArray[i]->setVelocity(0, 0, 0);
+	//	m_particleArray[i]->setDamping(0.8f);
+	//	m_particleArray[i]->setMass(5.0f);
+	//	m_particleArray[i]->setAcceleration(cyclone::Vector3::GRAVITY);
+	//	m_particleArray[i]->clearAccumulator();
+	//	m_world->getParticles().push_back(m_particleArray[i]);
+	//}
+	//for (int i = 0; i < CABLE_COUNT; i++)
+	//{
+	//	cables[i].particle[0] = m_particleArray[i];
+	//	cables[i].particle[1] = m_particleArray[i + 2];
+	//	cables[i].maxLength = 3.0f;
+	//	cables[i].restitution = 0.1f;
+	//	m_world->getContactGenerators().push_back(&cables[i]);
+	//}
+	//for (int i = 0; i < ROD_COUNT; i++)
+	//{
+	//	rods[i].particle[0] = m_particleArray[2 * i];
+	//	rods[i].particle[1] = m_particleArray[2 * i + 1];
+	//	rods[i].length = 2;
+	//	m_world->getContactGenerators().push_back(&rods[i]);
+	//}
+	//for (int i = 0; i < SUPPORT_COUNT; i++)
+	//{
+	//	supports[i].particle = m_particleArray[i];
+	//	cyclone::Vector3 supportAnchor = m_particleArray[i]->getPosition();
+	//	supportAnchor.y += 3;
+	//	supports[i].anchor = supportAnchor;
+	//	if (i > 3 && i < 8)
+	//		supports[i].maxLength = 4.0f;
+	//	else if (i == 2 || i == 3 || i == 8 || i == 9)
+	//		supports[i].maxLength = 3.5f;
+	//	else
+	//		supports[i].maxLength = 3.0f;
+	//	supports[i].restitution = 0.5f;
+	//	m_world->getContactGenerators().push_back(&supports[i]);
+	//}
 }
 
 void MyGlWindow::getParticles(Mover *m)
@@ -223,11 +249,36 @@ void MyGlWindow::drawStuff()
    polygonf( 4, 20., 0.,-25.,  20., 0., 25.,  20., 30., 25.,  20., 30., -25.);
 }
 
+void drawBlackHole(float radius, int slices, int stacks) {
+	glColor3f(0.0, 0.0, 0.0); // Set color to black
+
+	GLUquadric* quadric = gluNewQuadric();
+	gluQuadricDrawStyle(quadric, GLU_FILL);
+	gluQuadricNormals(quadric, GLU_SMOOTH);
+
+	glPushMatrix();
+	gluSphere(quadric, radius, slices, stacks);
+	glPopMatrix();
+
+	gluDeleteQuadric(quadric);
+}
+
+void drawWater()
+{
+	glDisable(GL_LIGHTING);
+	glEnable(GL_BLEND);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glPushMatrix();
+	glColor4f(0, 0, 1, 0.2f);
+	glTranslatef(0, 5.0, 0);
+	drawCube(100, 10, 100);
+	glPopMatrix();
+}
+
 //==========================================================================
 void MyGlWindow::draw()
 //==========================================================================
 {
-
   glViewport(0,0,w(),h());
 
 	// clear the window, be sure to clear the Z-Buffer too
@@ -286,8 +337,7 @@ void MyGlWindow::draw()
 	//draw objects
 	glPushMatrix();
 	glLoadName(i + 1);
-	glColor3f(0.7f, 0.7f, 0);
-	m_movers[i]->draw(0);
+	m_movers[i]->draw(0, cyclone::Vector3(0.7f, 0.7f, 0));
 	glPopMatrix();
  }
 
@@ -301,27 +351,28 @@ void MyGlWindow::draw()
   m_moverConnection->draw(0, m_movers.size());
   glPopMatrix();
 
-  //draw water
-  /*glDisable(GL_LIGHTING);
-  glEnable(GL_BLEND);
-  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-  glPushMatrix();
-  glColor4f(0, 0, 1, 0.2f);
-  glTranslatef(0, 5.0, 0);
-  drawCube(100, 10, 100);
-  glPopMatrix();*/
-
-
-
-  setupShadows();
-  drawBridge(1);
-  unsetupShadows();
+  //setupShadows();
+  //drawBridge(1);
+  //unsetupShadows();
 
   glEnable(GL_LIGHTING);
 
+  //glPushMatrix();
+  //drawBridge(0);
+  //glPopMatrix();
+
+
   glPushMatrix();
-  drawBridge(0);
+  // Set position and scale for the black hole
+  glTranslatef(1, 1, 1);
+  glScalef(1, 1, 1);
+
+  //drawBlackHole(1.0f, 50, 50);
+  //drawWater();
+
   glPopMatrix();
+
+  //glutSwapBuffers();
 
 
 
@@ -486,7 +537,7 @@ void MyGlWindow::doPick()
 		m_movers[i]->draw(0);
 	}
 	m_moverConnection->draw(0, m_movers.size());
-	drawBridge(0);
+	//drawBridge(0);
 
 	// go back to drawing mode, and see how picking did
 	int hits = glRenderMode(GL_RENDER);
@@ -553,7 +604,8 @@ int MyGlWindow::handle(int e)
 			 doPick();
 			 if (selected >= 0) {
 				 std::cout << "picked" << std::endl;
-				 p1selected = m_particleArray[selected]->getPosition();//p1selected = getSelectedBall(selected)->m_particle->getPosition();
+				 //p1selected = m_particleArray[selected]->getPosition();
+				 p1selected = getSelectedBall(selected)->m_particle->getPosition();
 			 }
 		 }
 		 damage(1);
@@ -564,12 +616,16 @@ int MyGlWindow::handle(int e)
 	  m_pressedMouseButton = -1;
 	  if (selected != -1)
 	  {
-		  //cyclone::Vector3 p2selected = m_particleArray[selected]->getPosition();//cyclone::Vector3 p2selected = getSelectedBall(selected)->m_particle->getPosition();
-		  //cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
-		  //m_particleArray[selected]->setVelocity(newVelocity);//getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
+		  //cyclone::Vector3 p2selected = m_particleArray[selected]->getPosition();
+		  cyclone::Vector3 p2selected = getSelectedBall(selected)->m_particle->getPosition();
 		  
+		  cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
+		  
+		  //m_particleArray[selected]->setVelocity(newVelocity);
+		  getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
+
 		  //####### change particle velocity
-		  prevPoint = cyclone::Vector3();
+		  //prevPoint = cyclone::Vector3();
 		  //#######
 
 		  selected = -1;
@@ -587,23 +643,28 @@ int MyGlWindow::handle(int e)
 
 			  double rx, ry, rz;
 			  mousePoleGo(r1x, r1y, r1z, r2x, r2y, r2z,
-				  static_cast<double>(m_particleArray[selected]->getPosition().x),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().x),
-				  static_cast<double>(m_particleArray[selected]->getPosition().y),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().y),
-				  static_cast<double>(m_particleArray[selected]->getPosition().z),//static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().z),
+				  //static_cast<double>(m_particleArray[selected]->getPosition().x),
+				  //static_cast<double>(m_particleArray[selected]->getPosition().y),
+				  //static_cast<double>(m_particleArray[selected]->getPosition().z),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().x),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().y),
+				  static_cast<double>(getSelectedBall(selected)->m_particle->getPosition().z),
 				  rx, ry, rz,
 				  (Fl::event_state() & FL_CTRL) != 0);
 			  damage(1);
 
 			  //####### change particle velocity
-			  cyclone::Vector3 v(rx, ry, rz);
-			  if (prevPoint.magnitude() > 0)
-				  m_particleArray[selected]->setVelocity((v - prevPoint) * 40.0);
-			  prevPoint.x = rx;
-			  prevPoint.y = ry;
-			  prevPoint.z = rz;
+			  //cyclone::Vector3 v(rx, ry, rz);
+			  //if (prevPoint.magnitude() > 0)
+				 // //m_particleArray[selected]->setVelocity((v - prevPoint) * 40.0);
+				 // getSelectedBall(selected)->m_particle->setVelocity((v - prevPoint) * 40.0);
+			  //prevPoint.x = rx;
+			  //prevPoint.y = ry;
+			  //prevPoint.z = rz;
 			  //#######
 
-			  //m_particleArray[selected]->setPosition(rx, ry, rz);//getSelectedBall(selected)->m_particle->setPosition(rx, ry, rz);
+			  getSelectedBall(selected)->m_particle->setPosition(rx, ry, rz);
+			  //m_particleArray[selected]->setPosition(rx, ry, rz);
 
 		  } else {
 		      float fractionChangeX = static_cast<float>(Fl::event_x() - m_lastMouseX) / static_cast<float>(this->w());
@@ -664,3 +725,21 @@ void MyGlWindow::getMouseNDC(float& x, float& y)
 	  y = (my / hd) * 2.0f - 1.f;
 }
 
+void MyGlWindow::testValue(float t)
+{
+	cyclone::Vector3 movablePos0 = m_movers[0]->m_particle->getPosition();
+	cyclone::Quaternion movableRot0 = m_movers[0]->orientation;
+	cyclone::Vector3 movablePos2 = m_movers[2]->m_particle->getPosition();
+	cyclone::Quaternion movableRot2 = m_movers[2]->orientation;
+
+	glm::vec3 aPos(movablePos0.x, movablePos0.y, movablePos0.z);
+	glm::quat aRot(movableRot0.r, movableRot0.i, movableRot0.j, movableRot0.k);
+	glm::vec3 cPos(movablePos2.x, movablePos2.y, movablePos2.z);
+	glm::quat cRot(movableRot2.r, movableRot2.i, movableRot2.j, movableRot2.k);
+
+	glm::vec3 bPos = glm::mix(aPos, cPos, t);
+	glm::quat bRot = glm::slerp(aRot, cRot, t);
+
+	m_movers[1]->m_particle->setPosition(cyclone::Vector3(bPos.x, bPos.y, bPos.z));
+	m_movers[1]->orientation = cyclone::Quaternion(bRot.w, bRot.x, bRot.y, bRot.z);
+}

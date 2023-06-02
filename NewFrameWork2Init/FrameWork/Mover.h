@@ -36,14 +36,18 @@ class Mover
 		cyclone::ParticleForceRegistry* m_forces;
 		std::vector<cyclone::ParticleForceGenerator *> m_forces_list;
 
+		cyclone::Matrix4 transformMatrix;
+		cyclone::Quaternion orientation;
+
 		Mover();
 		Mover(cyclone::Vector3, cyclone::Vector3, float, float);
 		~Mover() { };
 	
 		void update(float duration);
-		void draw(int shadow);
+		void draw(int shadow, cyclone::Vector3 color = cyclone::Vector3(1, 0, 0));
 		void checkEdges();
 		void setConnection(Mover* a);
 		void setConnection(cyclone::Vector3* a);
+		void getGLTransform(float matrix[16]);
 };
 #pragma once

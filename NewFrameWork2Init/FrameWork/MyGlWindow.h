@@ -23,6 +23,8 @@
 #include "ParticleCollision.h"
 #include <FL/Fl_Light_Button.H>
 #include <pworld.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 const int CABLE_COUNT = 10;
 const int ROD_COUNT = 6;
@@ -42,6 +44,7 @@ class MyGlWindow : public Fl_Gl_Window {
 		void drawStuff();
 		void doPick();
 		void test();
+		void testValue(float t);
 		Fl_Light_Button* ui;
 	private:
 		void initMovers();
