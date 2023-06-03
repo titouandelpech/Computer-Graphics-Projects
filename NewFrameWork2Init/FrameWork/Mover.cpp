@@ -33,11 +33,14 @@ Mover::Mover()
 	m_spring = nullptr;
 }
 
-Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, float damping)
+Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, float damping, int _type)
 {
-	size = 1.5f;
+	type = _type;
+	displayAxis = true;
+	size = 2;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
+	color = cyclone::Vector3(0.7f, 0.7f, 0);
 
 	//m_particle->setPosition(5, 20, 0);  //initial pos
 	//m_particle->setVelocity(0, 0, 35.0f); //initial vel
@@ -51,7 +54,7 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 	m_particle->setDamping(damping); //damping
 	m_particle->setAcceleration(0, 0, 0);  //initial acc.
 
-	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3(0, -10, 0));
+	m_gravity = new cyclone::ParticleGravity(cyclone::Vector3::GRAVITY);
 	m_drag = new cyclone::ParticleDrag(0.1, 0.1);
 
 	m_spring = nullptr;
@@ -76,7 +79,47 @@ void Mover::update(float duration)
 	//if (has_collisions) checkEdges();
 }
 
-void Mover::draw(int shadow, cyclone::Vector3 color)
+void Mover::draw(int shadow)
+{
+	if (type == 0)
+	{
+		drawMyCube(shadow, color);
+	}
+	else if (type == 1)
+	{
+		drawSphere(shadow, color);
+	}
+	if (!shadow && displayAxis) {
+		float x = m_particle->getPosition().x;
+		float y = m_particle->getPosition().y;
+		float z = m_particle->getPosition().z;
+
+		glPushMatrix();
+
+		glLineWidth(3.0f);
+		glBegin(GL_LINES);
+		glColor3f(1.0f, 0.0f, 0.0f);
+
+		glVertex3f(x, y, z);
+		glVertex3f(x, y + size * 2, z);
+
+		glColor3f(0.0f, 1.0f, 0.0f);
+
+		glVertex3f(x, y, z);
+		glVertex3d(x + size * 2, y, z);
+
+		glColor3f(0.0f, 0.0f, 1.0f);
+
+		glVertex3f(x, y, z);
+		glVertex3f(x, y, z + size * 2);
+		glEnd();
+		glLineWidth(1.0f);
+		
+		glPopMatrix();
+	}
+}
+
+void Mover::drawMyCube(int shadow, cyclone::Vector3 color)
 {
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
@@ -95,33 +138,12 @@ void Mover::draw(int shadow, cyclone::Vector3 color)
 	glPushMatrix(); // Add this line to isolate the transformation
 
 	glTranslatef(position.x, position.y, position.z);
-	glMultMatrixf(mat);
 	glutSolidCube(size);
+	glMultMatrixf(mat);
 	//glutSolidSphere(size, 30, 30);
 
-	if (!shadow) {
-		glLineWidth(3.0f);
-		glBegin(GL_LINES);
-		glColor3f(1.0f, 0.0f, 0.0f);
-
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, size * 2, 0.0f);
-
-		glColor3f(0.0f, 1.0f, 0.0f);
-
-		glVertex3d(0.0f, 0.0f, 0.0f);
-		glVertex3d(size * 2, 0.0, 0.0f);
-
-		glColor3f(0.0f, 0.0f, 1.0f);
-
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, size * 2);
-		glEnd();
-		glLineWidth(1.0f);
-	}
-	
 	glPopMatrix(); // Add this line to isolate the transformation
-	
+
 	if (anchor != nullptr)
 	{
 		glColor3f(1, 1, 0);  //Line color
@@ -136,6 +158,73 @@ void Mover::draw(int shadow, cyclone::Vector3 color)
 
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
+}
+
+void Mover::drawSphere(int shadow, cyclone::Vector3 color)
+{
+	cyclone::Vector3 position;
+	m_particle->getPosition(&position);
+	const cyclone::Vector3* anchor = m_spring ? m_spring->getAnchor() : nullptr;
+
+	transformMatrix.setOrientationAndPos(orientation, m_particle->getPosition());
+	GLfloat mat[16];
+	getGLTransform(mat);
+
+	if (!shadow)
+	{
+		glColor3f(color.x, color.y, color.z);
+		std::cout << position.x << " " << position.y << " " << position.z << std::endl;
+	}
+
+	glPushMatrix();
+
+	glTranslatef(position.x, position.y, position.z);
+	glutSolidSphere(size, 30, 30);
+	glMultMatrixf(mat);
+
+	glPopMatrix();
+
+	if (anchor != nullptr)
+	{
+		glColor3f(1, 1, 0);  //Line color
+		glLineWidth(3.0f);  //Line Width
+		glPushMatrix();
+		glBegin(GL_LINES);
+		glVertex3f(anchor->x, 0, anchor->z);  //Starting point
+		glVertex3f(anchor->x, anchor->y, anchor->z); //Ending point
+		glEnd();
+		glPopMatrix();
+	}
+
+	if (shadow)
+		glColor3f(0.1f, 0.1f, 0.1f);
+}
+
+void Mover::drawWater()
+{
+	glDisable(GL_LIGHTING);
+	glEnable(GL_BLEND);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glPushMatrix();
+	glColor4f(0, 0, 1, 0.2f);
+	glTranslatef(0, 5.0, 0);
+	drawCube(size, 10, size);
+	glPopMatrix();
+}
+
+void Mover::drawBlackHole()
+{
+	glColor3f(0.0, 0.0, 0.0); // Set color to black
+
+	GLUquadric* quadric = gluNewQuadric();
+	gluQuadricDrawStyle(quadric, GLU_FILL);
+	gluQuadricNormals(quadric, GLU_SMOOTH);
+
+	glPushMatrix();
+	gluSphere(quadric, size, 50, 50);
+	glPopMatrix();
+
+	gluDeleteQuadric(quadric);
 }
 
 void Mover::checkEdges()

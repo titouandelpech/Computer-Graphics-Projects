@@ -99,17 +99,22 @@ void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
 
-	Mover* a = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
-	Mover* b = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
-	Mover* c = new Mover(cyclone::Vector3(0, 3, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+	Mover* a = new Mover(cyclone::Vector3(1, 2, 0), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	a->color = cyclone::Vector3(1, 0, 0);
+	Mover* c = new Mover(cyclone::Vector3(10, 2, 0), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	c->color = cyclone::Vector3(0, 1, 0);
+	Mover* d = new Mover(cyclone::Vector3(7, 2, 4), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	d->color = cyclone::Vector3(0, 0, 1);
+	Mover* e = new Mover(cyclone::Vector3(14, 2, -2), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	e->color = cyclone::Vector3(1, 0, 1);
 
 	//Must input a 1/2 angle that you want to rotate
 	a->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
-	b->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
 	c->orientation = generateQuaternion(45, cyclone::Vector3(1, 1, 0));
 	m_movers.push_back(a);
-	m_movers.push_back(b);
 	m_movers.push_back(c);
+	m_movers.push_back(d);
+	m_movers.push_back(e);
 	
 	//for (unsigned int i = 0; i < m_movers.size(); i++) {
 	//	m_movers[i] = new Mover();
@@ -117,31 +122,31 @@ void MyGlWindow::initMovers()
 	m_moverConnection = new MoverConnection();
 
 	//collision with the ground
-	//cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
-	//for each (Mover * m in m_movers) {
-	//	myGroundContact->init(m->m_particle, m->size);
-	//}
-	//for each (Mover * m in m_moverConnection->m_movers) {
-	//	myGroundContact->init(m->m_particle, m->size);
-	//}
-	//m_contactGenerators.push_back(myGroundContact);
+	cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
+	for each (Mover * m in m_movers) {
+		myGroundContact->init(m->m_particle, m->size);
+	}
+	for each (Mover * m in m_moverConnection->m_movers) {
+		myGroundContact->init(m->m_particle, m->size);
+	}
+	m_contactGenerators.push_back(myGroundContact);
 
 	//collision between particles
-	//cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
-	//myParticleCollisions->particle[0] = m_moverConnection->m_movers[0]->m_particle;
-	//myParticleCollisions->particle[1] = m_moverConnection->m_movers[1]->m_particle;
-	//myParticleCollisions->size = m_moverConnection->m_movers[0]->size;
-	//m_contactGenerators.push_back(myParticleCollisions);
+	cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
+	myParticleCollisions->particle[0] = m_movers[0]->m_particle;
+	myParticleCollisions->particle[1] = m_movers[1]->m_particle;
+	myParticleCollisions->size = m_movers[0]->size;
+	m_contactGenerators.push_back(myParticleCollisions);
 
 	//particle world
-	m_world = new cyclone::ParticleWorld(12*10);
+	m_world = new cyclone::ParticleWorld(4);
 	for each (Mover * m in m_movers) {
 		getParticles(m);
 	}
 	for each (Mover * m in m_moverConnection->m_movers) {
 		getParticles(m);
 	}
-	//m_world->getContactGenerators().push_back(myGroundContact);
+	m_world->getContactGenerators().push_back(myGroundContact);
 	//m_world->getContactGenerators().push_back(myParticleCollisions);
 
 	//bridge
@@ -240,39 +245,90 @@ void MyGlWindow::getParticles(Mover *m)
 	  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
   }
 
+  void drawArrowTargetDir(cyclone::Vector3 pos, cyclone::Vector3 targetDirection) {
+	  // Arrow parameters
+	  float arrowLength = 5.0f;
+	  float arrowHeadHeight = 0.5f;
+	  float arrowHeadRadius = 0.3f;
 
+	  glColor3f(0.7f, 0.7f, 0);
 
+	  glPushMatrix();
+
+	  // Translate to the position
+	  glTranslatef(pos.x, pos.y, pos.z);
+
+	  // Rotate the arrow to point in the desired direction
+	  cyclone::Vector3 defaultDirection(1, 0, 0);
+	  cyclone::Vector3 rotationAxis = defaultDirection % targetDirection; // % is the cross product
+	  float rotationAngle = acos(defaultDirection * targetDirection); // * is the dot product
+
+	  // Convert the rotation angle from radians to degrees
+	  rotationAngle = rotationAngle * 180.0 / 3.141592653589793;
+
+	  // Apply the rotation
+	  glRotatef(rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
+
+	  // Draw arrow body (as a line along x-axis)
+	  glLineWidth(20.0f);  // Make the arrow body thicker
+	  glBegin(GL_LINES);
+	  glVertex3f(0, 0, 0);
+	  glVertex3f(arrowLength - arrowHeadHeight, 0, 0);
+	  glEnd();
+
+	  // Draw arrow head (as a cone)
+	  glTranslatef(arrowLength - arrowHeadHeight, 0, 0);
+	  glRotatef(90, 0, 1, 0); // Rotate the cone so its base lies in the XZ plane
+	  glutSolidCone(arrowHeadRadius, arrowHeadHeight, 10, 2);
+
+	  glPopMatrix();
+	  glLineWidth(1);
+  }
+
+  void drawArrowTargetPos(cyclone::Vector3 pos, cyclone::Vector3 targetPos) {
+	  // Arrow parameters
+	  float arrowLength = 5.0f;
+	  float arrowHeadHeight = 0.5f;
+	  float arrowHeadRadius = 0.3f;
+	  cyclone::Vector3 direction = (targetPos - pos).unit();
+
+	  glColor3f(0.7f, 0.7f, 0);
+
+	  glPushMatrix();
+	  // Translate to the position
+	  glTranslatef(pos.x, pos.y, pos.z);
+
+	  // Rotate the arrow to point in the desired direction
+	  // We find the rotation angle and axis using the cross product between the 
+	  // default direction (1, 0, 0) and the target direction
+	  cyclone::Vector3 defaultDirection(1, 0, 0);
+	  cyclone::Vector3 rotationAxis = defaultDirection % direction; // % is the cross product
+	  float rotationAngle = acos(defaultDirection * direction); // * is the dot product
+	  // Convert the rotation angle from radians to degrees
+	  rotationAngle = rotationAngle * 180.0 / 3.141592653589793;
+	  // Apply the rotation
+	  glRotatef(rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
+
+	  // Draw arrow body (as a line along x-axis)
+	  glLineWidth(20.0f);
+	  glBegin(GL_LINES);
+	  glVertex3f(0, 0, 0);
+	  glVertex3f(arrowLength - arrowHeadHeight, 0, 0);
+	  glEnd();
+
+	  // Draw arrow head (as a cone or a solid sphere)
+	  glTranslatef(arrowLength - arrowHeadHeight, 0, 0);
+	  glRotatef(90, 0, 1, 0);
+	  glutSolidCone(arrowHeadRadius, arrowHeadHeight, 10, 2);
+
+	  glPopMatrix();
+	  glLineWidth(1);
+  }
 
 
 void MyGlWindow::drawStuff()
 {
    polygonf( 4, 20., 0.,-25.,  20., 0., 25.,  20., 30., 25.,  20., 30., -25.);
-}
-
-void drawBlackHole(float radius, int slices, int stacks) {
-	glColor3f(0.0, 0.0, 0.0); // Set color to black
-
-	GLUquadric* quadric = gluNewQuadric();
-	gluQuadricDrawStyle(quadric, GLU_FILL);
-	gluQuadricNormals(quadric, GLU_SMOOTH);
-
-	glPushMatrix();
-	gluSphere(quadric, radius, slices, stacks);
-	glPopMatrix();
-
-	gluDeleteQuadric(quadric);
-}
-
-void drawWater()
-{
-	glDisable(GL_LIGHTING);
-	glEnable(GL_BLEND);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-	glPushMatrix();
-	glColor4f(0, 0, 1, 0.2f);
-	glTranslatef(0, 5.0, 0);
-	drawCube(100, 10, 100);
-	glPopMatrix();
 }
 
 //==========================================================================
@@ -307,7 +363,7 @@ void MyGlWindow::draw()
     
  // Add a sphere to the scene.
 //Draw axises
-  glLineWidth(3.0f);
+  /*glLineWidth(3.0f);
   glBegin(GL_LINES);
   glColor3f(1,0,0);
 
@@ -324,7 +380,7 @@ void MyGlWindow::draw()
   glVertex3f(0.0f,0.1f,0.0f);
   glVertex3f(0.0f,0.1f,100.0f);
   glEnd();
-  glLineWidth(1.0f);
+  glLineWidth(1.0f);*/
 
  for (unsigned int i = 0; i < m_movers.size(); i++) {
 	//draw shadow
@@ -337,9 +393,11 @@ void MyGlWindow::draw()
 	//draw objects
 	glPushMatrix();
 	glLoadName(i + 1);
-	m_movers[i]->draw(0, cyclone::Vector3(0.7f, 0.7f, 0));
+	m_movers[i]->draw(0);
 	glPopMatrix();
  }
+
+  drawArrowTargetDir(m_movers[0]->m_particle->getPosition(), cyclone::Vector3(1, 0, 0).unit());
 
   setupShadows();
   m_moverConnection->draw(1, m_movers.size());
@@ -367,14 +425,9 @@ void MyGlWindow::draw()
   glTranslatef(1, 1, 1);
   glScalef(1, 1, 1);
 
-  //drawBlackHole(1.0f, 50, 50);
-  //drawWater();
-
   glPopMatrix();
 
   //glutSwapBuffers();
-
-
 
   /////////////////////////
   putText("mksung", 0, 0, 1, 1, 0);

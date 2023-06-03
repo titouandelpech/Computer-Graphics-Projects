@@ -107,9 +107,9 @@ int main()
 	Fl_Button * test2 = new Fl_Button(width - 400, height - 40, 100, 20, "Test");
 	test2->callback(but_cb2, gl);
 
-	Fl_Value_Slider* test3 = new Fl_Value_Slider(width - 200, height - 40, 150, 20, "Test");
-	test3->type(FL_HORIZONTAL);
-	test3->callback(but_cb3, gl);
+	//Fl_Value_Slider* test3 = new Fl_Value_Slider(width - 200, height - 40, 150, 20, "Test");
+	//test3->type(FL_HORIZONTAL);
+	//test3->callback(but_cb3, gl);
 
 	wind->end();
 

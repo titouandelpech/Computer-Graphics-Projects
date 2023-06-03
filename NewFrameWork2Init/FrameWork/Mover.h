@@ -30,6 +30,9 @@ class Mover
 		cyclone::MySpring* m_spring;
 		cyclone::MyParticleBuoyancy* m_buoyancy;
 		bool has_collisions;
+		bool displayAxis;
+		int type;
+		cyclone::Vector3 color;
 	
 		cyclone::ParticleGravity *m_gravity;
 		cyclone::ParticleDrag *m_drag;
@@ -40,14 +43,20 @@ class Mover
 		cyclone::Quaternion orientation;
 
 		Mover();
-		Mover(cyclone::Vector3, cyclone::Vector3, float, float);
+		Mover(cyclone::Vector3, cyclone::Vector3, float, float, int type = 0);
 		~Mover() { };
 	
 		void update(float duration);
-		void draw(int shadow, cyclone::Vector3 color = cyclone::Vector3(1, 0, 0));
+		void draw(int shadow);
 		void checkEdges();
 		void setConnection(Mover* a);
 		void setConnection(cyclone::Vector3* a);
 		void getGLTransform(float matrix[16]);
+
+	private:
+		void drawMyCube(int shadow, cyclone::Vector3 color);
+		void drawSphere(int shadow, cyclone::Vector3 color);
+		void drawWater();
+		void drawBlackHole();
 };
 #pragma once
