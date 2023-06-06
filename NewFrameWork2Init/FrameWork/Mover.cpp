@@ -59,8 +59,8 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 
 	//m_forces = nullptr;
 	m_forces = new cyclone::ParticleForceRegistry();
-	m_forces->add(m_particle, m_gravity);
-	m_forces_list.push_back(m_gravity);
+	//m_forces->add(m_particle, m_gravity);
+	//m_forces_list.push_back(m_gravity);
 	//m_forces->add(m_particle, m_drag);
 	//m_forces_list.push_back(m_drag);
 }
@@ -73,53 +73,62 @@ void Mover::update(float duration)
 	if (m_forces != nullptr)
 		m_forces->updateForces(duration);
 	m_particle->integrate(duration);
+
+	cyclone::Vector3 angularAcceleration(0, 0.1, 0);
+	rotation.addScaledVector(angularAcceleration, duration);
+	double angularDamping = 0.9;
+	rotation *= real_pow(angularDamping, duration);
+	orientation.addScaledVector(rotation, duration);
+	orientation.normalise();	
+
 	//if (has_collisions) checkEdges();
 }
 
 void Mover::draw(int shadow, cyclone::Vector3 color)
 {
-	cyclone::Vector3 position;
-	m_particle->getPosition(&position);
+	cyclone::Vector3 position = m_particle->getPosition();
+
 	const cyclone::Vector3* anchor = m_spring ? m_spring->getAnchor() : nullptr;
 
+	//transformMatrix.setOrientationAndPos(orientation, cyclone::Vector3(0, 6, 0));
 	transformMatrix.setOrientationAndPos(orientation, m_particle->getPosition());
 	GLfloat mat[16];
 	getGLTransform(mat);
 
-	if (!shadow)
-	{
-		glColor3f(color.x, color.y, color.z);
-		std::cout << position.x << " " << position.y << " " << position.z << std::endl;
-	}
 
 	glPushMatrix(); // Add this line to isolate the transformation
 
+	if (!shadow)
+	{
+		glColor3f(color.x, color.y, color.z);
+		std::cout << orientation.i << " " << orientation.j << " " << orientation.k << std::endl;
+	}
 	glTranslatef(position.x, position.y, position.z);
 	glMultMatrixf(mat);
 	glutSolidCube(size);
+	if (!shadow) {
+        glLineWidth(3.0f);
+        glBegin(GL_LINES);
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        glVertex3f(0.0f, 0.0f, 0.0f);
+        glVertex3f(0.0f, size * 2, 0.0f);
+
+        glColor3f(0.0f, 1.0f, 0.0f);
+
+        glVertex3d(0.0f, 0.0f, 0.0f);
+        glVertex3d(size * 2, 0.0, 0.0f);
+
+        glColor3f(0.0f, 0.0f, 1.0f);
+
+        glVertex3f(0.0f, 0.0f, 0.0f);
+        glVertex3f(0.0f, 0.0f, size * 2);
+        glEnd();
+        glLineWidth(1.0f);
+    }
 	//glutSolidSphere(size, 30, 30);
 
-	if (!shadow) {
-		glLineWidth(3.0f);
-		glBegin(GL_LINES);
-		glColor3f(1.0f, 0.0f, 0.0f);
 
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, size * 2, 0.0f);
-
-		glColor3f(0.0f, 1.0f, 0.0f);
-
-		glVertex3d(0.0f, 0.0f, 0.0f);
-		glVertex3d(size * 2, 0.0, 0.0f);
-
-		glColor3f(0.0f, 0.0f, 1.0f);
-
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, size * 2);
-		glEnd();
-		glLineWidth(1.0f);
-	}
-	
 	glPopMatrix(); // Add this line to isolate the transformation
 	
 	if (anchor != nullptr)

@@ -99,17 +99,17 @@ void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
 
-	Mover* a = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
-	Mover* b = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
-	Mover* c = new Mover(cyclone::Vector3(0, 3, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+	Mover* a = new Mover(cyclone::Vector3(0, 6, 0), cyclone::Vector3(0, 0, 0), 1, 0.9);
+	//Mover* b = new Mover(cyclone::Vector3(0, 1.5f, 0), cyclone::Vector3(0, 0, 0), 1, 0);
+	//Mover* c = new Mover(cyclone::Vector3(0, 3, 0), cyclone::Vector3(0, 0, 0), 1, 0);
 
 	//Must input a 1/2 angle that you want to rotate
-	a->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
-	b->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
-	c->orientation = generateQuaternion(45, cyclone::Vector3(1, 1, 0));
+	a->orientation = generateQuaternion(0, cyclone::Vector3(0, 0, 0));
+	//b->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
+	//c->orientation = generateQuaternion(45, cyclone::Vector3(1, 1, 0));
 	m_movers.push_back(a);
-	m_movers.push_back(b);
-	m_movers.push_back(c);
+	//m_movers.push_back(b);
+	//m_movers.push_back(c);
 	
 	//for (unsigned int i = 0; i < m_movers.size(); i++) {
 	//	m_movers[i] = new Mover();
@@ -134,13 +134,13 @@ void MyGlWindow::initMovers()
 	//m_contactGenerators.push_back(myParticleCollisions);
 
 	//particle world
-	m_world = new cyclone::ParticleWorld(12*10);
-	for each (Mover * m in m_movers) {
-		getParticles(m);
-	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		getParticles(m);
-	}
+	//m_world = new cyclone::ParticleWorld(12*10);
+	//for each (Mover * m in m_movers) {
+	//	getParticles(m);
+	//}
+	//for each (Mover * m in m_moverConnection->m_movers) {
+	//	getParticles(m);
+	//}
 	//m_world->getContactGenerators().push_back(myGroundContact);
 	//m_world->getContactGenerators().push_back(myParticleCollisions);
 
@@ -362,15 +362,15 @@ void MyGlWindow::draw()
   //glPopMatrix();
 
 
-  glPushMatrix();
+  //glPushMatrix();
   // Set position and scale for the black hole
-  glTranslatef(1, 1, 1);
-  glScalef(1, 1, 1);
+  //glTranslatef(1, 1, 1);
+  //glScalef(1, 1, 1);
 
   //drawBlackHole(1.0f, 50, 50);
   //drawWater();
 
-  glPopMatrix();
+  //glPopMatrix();
 
   //glutSwapBuffers();
 
@@ -461,8 +461,8 @@ void MyGlWindow::test()
 	}
 	m_moverConnection->~MoverConnection();
 	m_contactGenerators.clear();
-	m_world->getParticles().clear();
-	m_world->getContactGenerators().clear();
+	//m_world->getParticles().clear();
+	//m_world->getContactGenerators().clear();
 
 	initMovers();
 }
@@ -475,32 +475,32 @@ void MyGlWindow::update()
 
 	float duration = (float)TimingData::get().lastFrameDuration * 0.003f;
 	
-	m_world->runPhysics(duration);
+	//m_world->runPhysics(duration);
 
 	//----------------- OLD CODE -------------------
-	//for (unsigned int i = 0; i < m_movers.size(); i++) {
-	//	if (m_movers[i]) {
-	//		m_movers[i]->update(duration);
-	//	}
-	//}
-	//m_moverConnection->update(duration);
-	//
-	//unsigned limit = maxPossibleContact;
-	//cyclone::ParticleContact* nextContact = m_contact; //cyclone::ParticleContact starting pointer
-	//for (std::vector<cyclone::ParticleContactGenerator*>::iterator g = m_contactGenerators.begin(); g != m_contactGenerators.end(); g++)
-	//{
-	//	unsigned used = (*g)->addContact(nextContact, limit); //# of solved collision is saved in used
-	//	limit -= used; //subtract limit by used
-	//	nextContact += used; //move the pointer
-	//	if (limit <= 0) break; //if nothing left, then return
-	//}
-	//int num = maxPossibleContact - limit; //how many collision are solved?
-	//
-	//if (num > 0)
-	//{
-	//	//For multiple contacts, set the max. iteration to (num) *2 
-	//	m_resolver->setIterations(num * 2);
-	//	m_resolver->resolveContacts(m_contact, num, duration);	//}
+	for (unsigned int i = 0; i < m_movers.size(); i++) {
+		if (m_movers[i]) {
+			m_movers[i]->update(duration);
+		}
+	}
+	m_moverConnection->update(duration);
+	
+	unsigned limit = maxPossibleContact;
+	cyclone::ParticleContact* nextContact = m_contact; //cyclone::ParticleContact starting pointer
+	for (std::vector<cyclone::ParticleContactGenerator*>::iterator g = m_contactGenerators.begin(); g != m_contactGenerators.end(); g++)
+	{
+		unsigned used = (*g)->addContact(nextContact, limit); //# of solved collision is saved in used
+		limit -= used; //subtract limit by used
+		nextContact += used; //move the pointer
+		if (limit <= 0) break; //if nothing left, then return
+	}
+	int num = maxPossibleContact - limit; //how many collision are solved?
+	
+	if (num > 0)
+	{
+		//For multiple contacts, set the max. iteration to (num) *2 
+		m_resolver->setIterations(num * 2);
+		m_resolver->resolveContacts(m_contact, num, duration);	}
 }
 
 

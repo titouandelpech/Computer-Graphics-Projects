@@ -37,6 +37,7 @@ class Mover
 		std::vector<cyclone::ParticleForceGenerator *> m_forces_list;
 
 		cyclone::Matrix4 transformMatrix;
+		cyclone::Vector3 rotation;
 		cyclone::Quaternion orientation;
 
 		Mover();
