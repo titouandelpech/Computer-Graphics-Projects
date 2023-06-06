@@ -64,12 +64,13 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 
 	float aspect = (w / (float)h);
 	m_viewer = new Viewer(viewPoint, viewCenter, upVector, 45.0f, aspect);
-	m_resolver = new cyclone::ParticleContactResolver(1);
+	m_viewer->zoom(-1);
+	//m_resolver = new cyclone::ParticleContactResolver(1);
 
 	initMovers();
 
 	selected = -1;
-	maxPossibleContact = 3;
+	//maxPossibleContact = 21;
 
 //	glutInit(0,0);
 
@@ -99,13 +100,13 @@ void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
 
-	Mover* a = new Mover(cyclone::Vector3(1, 2, 0), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	Mover* a = new Mover(cyclone::Vector3(1, 2, 0), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
 	a->color = cyclone::Vector3(1, 0, 0);
-	Mover* c = new Mover(cyclone::Vector3(10, 2, 0), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	Mover* c = new Mover(cyclone::Vector3(10, 2, 0), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
 	c->color = cyclone::Vector3(0, 1, 0);
-	Mover* d = new Mover(cyclone::Vector3(7, 2, 4), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	Mover* d = new Mover(cyclone::Vector3(7, 2, 4), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
 	d->color = cyclone::Vector3(0, 0, 1);
-	Mover* e = new Mover(cyclone::Vector3(14, 2, -2), cyclone::Vector3(0, 0, 0), 1, 0, 1);
+	Mover* e = new Mover(cyclone::Vector3(14, 2, -2), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
 	e->color = cyclone::Vector3(1, 0, 1);
 
 	//Must input a 1/2 angle that you want to rotate
@@ -131,15 +132,9 @@ void MyGlWindow::initMovers()
 	}
 	m_contactGenerators.push_back(myGroundContact);
 
-	//collision between particles
-	cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
-	myParticleCollisions->particle[0] = m_movers[0]->m_particle;
-	myParticleCollisions->particle[1] = m_movers[1]->m_particle;
-	myParticleCollisions->size = m_movers[0]->size;
-	m_contactGenerators.push_back(myParticleCollisions);
 
 	//particle world
-	m_world = new cyclone::ParticleWorld(4);
+	m_world = new cyclone::ParticleWorld(21, 210);
 	for each (Mover * m in m_movers) {
 		getParticles(m);
 	}
@@ -147,8 +142,20 @@ void MyGlWindow::initMovers()
 		getParticles(m);
 	}
 	m_world->getContactGenerators().push_back(myGroundContact);
-	//m_world->getContactGenerators().push_back(myParticleCollisions);
+	
+	//collision between particles
+	for (int i = 0; i < m_movers.size(); i++) {
+		for (int j = i + 1; j < m_movers.size(); j++) {
+			cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
+			myParticleCollisions->particle[0] = m_movers[i]->m_particle;
+			myParticleCollisions->particle[1] = m_movers[j]->m_particle;
+			myParticleCollisions->size = m_movers[i]->size;
+			m_contactGenerators.push_back(myParticleCollisions);
+			m_world->getContactGenerators().push_back(myParticleCollisions);
+		}
+	}
 
+	myScore = 0;
 	//bridge
 	//m_particleArray = std::vector<cyclone::Particle*>(12);
 	//for (int i = 0; i < 12; i++)
@@ -247,9 +254,9 @@ void MyGlWindow::getParticles(Mover *m)
 
   void drawArrowTargetDir(cyclone::Vector3 pos, cyclone::Vector3 targetDirection) {
 	  // Arrow parameters
-	  float arrowLength = 5.0f;
-	  float arrowHeadHeight = 0.5f;
-	  float arrowHeadRadius = 0.3f;
+	  float arrowLength = 12.0f;
+	  float arrowHeadHeight = 2.0f;
+	  float arrowHeadRadius = 1.2f;
 
 	  glColor3f(0.7f, 0.7f, 0);
 
@@ -325,6 +332,17 @@ void MyGlWindow::getParticles(Mover *m)
 	  glLineWidth(1);
   }
 
+  void drawEdges(cyclone::Vector3 pos, cyclone::Vector3 size)
+  {
+	  setupFloor();
+
+	  glEnable(GL_LIGHTING);
+	  glPushMatrix();
+	  glColor3f(0.04, 0.20, 0.00);
+	  glTranslatef(pos.x, pos.y, pos.z);
+	  drawCube(size.x, size.y, size.z);
+	  glPopMatrix();
+  }
 
 void MyGlWindow::drawStuff()
 {
@@ -351,11 +369,11 @@ void MyGlWindow::draw()
   
   // now draw the ground plane
   setProjection();
-  setupFloor();
+  //setupFloor();
 
-  glPushMatrix();
+  /*glPushMatrix();
 	drawFloor(200,20);
-  glPopMatrix();
+  glPopMatrix();*/
 
 
   setupLight(m_viewer->getViewPoint().x,m_viewer->getViewPoint().y,m_viewer->getViewPoint().z);
@@ -409,16 +427,6 @@ void MyGlWindow::draw()
   m_moverConnection->draw(0, m_movers.size());
   glPopMatrix();
 
-  //setupShadows();
-  //drawBridge(1);
-  //unsetupShadows();
-
-  glEnable(GL_LIGHTING);
-
-  //glPushMatrix();
-  //drawBridge(0);
-  //glPopMatrix();
-
 
   glPushMatrix();
   // Set position and scale for the black hole
@@ -426,6 +434,16 @@ void MyGlWindow::draw()
   glScalef(1, 1, 1);
 
   glPopMatrix();
+
+  drawEdges(cyclone::Vector3(0, -0.5f, 0), cyclone::Vector3(80, 1, 10));
+  drawEdges(cyclone::Vector3(0, -0.5f, 97), cyclone::Vector3(80, 1, 10));
+  drawEdges(cyclone::Vector3(0, -0.5f, -97), cyclone::Vector3(80, 1, 10));
+  drawEdges(cyclone::Vector3(0, -0.5f, 48.5), cyclone::Vector3(104, 1, 87));
+  drawEdges(cyclone::Vector3(0, -0.5f, -48.5), cyclone::Vector3(104, 1, 87));
+  drawEdges(cyclone::Vector3(52.5, 10, 0), cyclone::Vector3(5, 20, 210));
+  drawEdges(cyclone::Vector3(-52.5, 10, 0), cyclone::Vector3(5, 20, 210));
+  drawEdges(cyclone::Vector3(0, 10, 102.5), cyclone::Vector3(100, 20, 5));
+  drawEdges(cyclone::Vector3(0, 10, -102.5), cyclone::Vector3(100, 20, 5));
 
   //glutSwapBuffers();
 

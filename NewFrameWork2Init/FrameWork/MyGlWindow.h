@@ -73,6 +73,7 @@ class MyGlWindow : public Fl_Gl_Window {
 		//Collision resolver(calculate impulse and change velocity and positions)
 		cyclone::ParticleContactResolver* m_resolver;
 		int maxPossibleContact;
+		int myScore;
 
 		//bridge
 		std::vector<cyclone::Particle*> m_particleArray;

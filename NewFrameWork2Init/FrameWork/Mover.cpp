@@ -36,7 +36,7 @@ Mover::Mover()
 Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, float damping, int _type)
 {
 	type = _type;
-	displayAxis = true;
+	displayAxis = false;
 	size = 2;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
