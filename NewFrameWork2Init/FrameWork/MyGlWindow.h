@@ -43,7 +43,7 @@ class MyGlWindow : public Fl_Gl_Window {
 		void update();
 		void drawStuff();
 		void doPick();
-		void test();
+		void restart();
 		void testValue(float t);
 		Fl_Light_Button* ui;
 	private:
@@ -58,7 +58,6 @@ class MyGlWindow : public Fl_Gl_Window {
 		float fieldOfView;
 		Viewer *m_viewer;
 		std::vector<Mover *> m_movers;
-		MoverConnection *m_moverConnection;
 		cyclone::ParticleWorld *m_world;
 		cyclone::Vector3 p1selected;
 		cyclone::Vector3 prevPoint;
@@ -69,11 +68,10 @@ class MyGlWindow : public Fl_Gl_Window {
 
 		cyclone::ParticleContact m_contact[3]; //maximum #of collisions possible
 		//Container for MyGroundContact
-		std::vector<cyclone::ParticleContactGenerator*> m_contactGenerators;
-		//Collision resolver(calculate impulse and change velocity and positions)
-		cyclone::ParticleContactResolver* m_resolver;
 		int maxPossibleContact;
 		int myScore;
+		bool canPlay;
+		bool endGame;
 
 		//bridge
 		std::vector<cyclone::Particle*> m_particleArray;

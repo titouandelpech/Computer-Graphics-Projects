@@ -67,7 +67,7 @@ void but_cb2(Fl_Widget* o, void*data)
 {
 	Fl_Button* b = (Fl_Button*)o; //캐스팅이 반드시 필요
 	MyGlWindow * win = (MyGlWindow *)data;
-	win->test();
+	win->restart();
 	win->damage(1);
 }
 
@@ -104,7 +104,7 @@ int main()
 	gl->ui = test;
 
 
-	Fl_Button * test2 = new Fl_Button(width - 400, height - 40, 100, 20, "Test");
+	Fl_Button * test2 = new Fl_Button(width - 400, height - 40, 100, 20, "Restart");
 	test2->callback(but_cb2, gl);
 
 	//Fl_Value_Slider* test3 = new Fl_Value_Slider(width - 200, height - 40, 150, 20, "Test");
