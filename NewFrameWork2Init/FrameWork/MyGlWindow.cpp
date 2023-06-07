@@ -102,46 +102,33 @@ void MyGlWindow::initMovers()
 
 	Mover* a = new Mover(cyclone::Vector3(1, 2, 0), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
 	a->color = cyclone::Vector3(1, 0, 0);
-	Mover* c = new Mover(cyclone::Vector3(10, 2, 0), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
-	c->color = cyclone::Vector3(0, 1, 0);
-	Mover* d = new Mover(cyclone::Vector3(7, 2, 4), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
-	d->color = cyclone::Vector3(0, 0, 1);
-	Mover* e = new Mover(cyclone::Vector3(14, 2, -2), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
-	e->color = cyclone::Vector3(1, 0, 1);
+	//Mover* c = new Mover(cyclone::Vector3(10, 2, 0), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
+	//c->color = cyclone::Vector3(0, 1, 0);
+	//Mover* d = new Mover(cyclone::Vector3(7, 2, 4), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
+	//d->color = cyclone::Vector3(0, 0, 1);
+	//Mover* e = new Mover(cyclone::Vector3(14, 2, -2), cyclone::Vector3(0, 0, 0), 5, 0.9, 1);
+	//e->color = cyclone::Vector3(1, 0, 1);
 
 	//Must input a 1/2 angle that you want to rotate
 	a->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
-	c->orientation = generateQuaternion(45, cyclone::Vector3(1, 1, 0));
 	m_movers.push_back(a);
-	m_movers.push_back(c);
-	m_movers.push_back(d);
-	m_movers.push_back(e);
+	//m_movers.push_back(c);
+	//m_movers.push_back(d);
+	//m_movers.push_back(e);
 	
 	//for (unsigned int i = 0; i < m_movers.size(); i++) {
 	//	m_movers[i] = new Mover();
 	//}
 	m_moverConnection = new MoverConnection();
 
-	//collision with the ground
-	cyclone::MyGroundContact* myGroundContact = new cyclone::MyGroundContact();
-	for each (Mover * m in m_movers) {
-		myGroundContact->init(m->m_particle, m->size);
-	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		myGroundContact->init(m->m_particle, m->size);
-	}
-	m_contactGenerators.push_back(myGroundContact);
-
-
 	//particle world
 	m_world = new cyclone::ParticleWorld(21, 210);
 	for each (Mover * m in m_movers) {
 		getParticles(m);
 	}
-	for each (Mover * m in m_moverConnection->m_movers) {
-		getParticles(m);
-	}
-	m_world->getContactGenerators().push_back(myGroundContact);
+	//for each (Mover * m in m_moverConnection->m_movers) {
+	//	getParticles(m);
+	//}
 	
 	//collision between particles
 	for (int i = 0; i < m_movers.size(); i++) {
@@ -150,10 +137,21 @@ void MyGlWindow::initMovers()
 			myParticleCollisions->particle[0] = m_movers[i]->m_particle;
 			myParticleCollisions->particle[1] = m_movers[j]->m_particle;
 			myParticleCollisions->size = m_movers[i]->size;
-			m_contactGenerators.push_back(myParticleCollisions);
+			//m_contactGenerators.push_back(myParticleCollisions);
 			m_world->getContactGenerators().push_back(myParticleCollisions);
 		}
 	}
+
+	//collision with the ground
+	cyclone::MyEdgeContact* myEdgeContact = new cyclone::MyEdgeContact();
+	for each (Mover * m in m_movers) {
+		myEdgeContact->init(m->m_particle, m->size);
+	}
+	//for each (Mover * m in m_moverConnection->m_movers) {
+	//	myGroundContact->init(m->m_particle, m->size);
+	//}
+	//m_contactGenerators.push_back(myGroundContact);
+	m_world->getContactGenerators().push_back(myEdgeContact);
 
 	myScore = 0;
 	//bridge
