@@ -132,7 +132,7 @@ void Mover::drawMyCube(int shadow, cyclone::Vector3 color)
 	if (!shadow)
 	{
 		glColor3f(color.x, color.y, color.z);
-		std::cout << position.x << " " << position.y << " " << position.z << std::endl;
+		//std::cout << position.x << " " << position.y << " " << position.z << std::endl;
 	}
 
 	glPushMatrix(); // Add this line to isolate the transformation

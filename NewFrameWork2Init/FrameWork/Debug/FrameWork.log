@@ -1,21 +1,21 @@
 ﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   MyGlWindow.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(103,88): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(105,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(107,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(109,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(111,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(113,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(115,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(117,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(119,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(121,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(123,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(125,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(127,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(129,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(131,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(133,89): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(103,89): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(105,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(107,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(109,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(111,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(113,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(115,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(117,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(119,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(121,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(123,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(125,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(127,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(129,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(131,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(133,90): warning C4305: 'argument' : troncation de 'double' à 'float'
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(162,20): warning C4018: '<' : incompatibilité signed/unsigned
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(163,25): warning C4018: '<' : incompatibilité signed/unsigned
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(245,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
@@ -72,27 +72,7 @@ C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\Fram
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(517,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(518,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(519,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(582,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(751,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(751,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(751,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(751,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(584,20): warning C4018: '<' : incompatibilité signed/unsigned
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
@@ -109,6 +89,26 @@ C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\Fram
               T=float
           ]
 C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
