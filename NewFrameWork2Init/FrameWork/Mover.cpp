@@ -37,7 +37,7 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 {
 	type = _type;
 	displayAxis = false;
-	size = 2;
+	size = 3;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
 	color = cyclone::Vector3(0.7f, 0.7f, 0);
