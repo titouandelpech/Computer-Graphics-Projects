@@ -37,7 +37,7 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 {
 	type = _type;
 	displayAxis = false;
-	size = 3;
+	size = (type == 2) ? 0.1f : 3;
 	has_collisions = true; //false;
 	m_particle = new cyclone::Particle();
 	color = cyclone::Vector3(0.7f, 0.7f, 0);
@@ -62,8 +62,11 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 
 	//m_forces = nullptr;
 	m_forces = new cyclone::ParticleForceRegistry();
-	m_forces->add(m_particle, m_gravity);
-	m_forces_list.push_back(m_gravity);
+	if (type != 2)
+	{
+		m_forces->add(m_particle, m_gravity);
+		m_forces_list.push_back(m_gravity);
+	}
 	//m_forces->add(m_particle, m_drag);
 	//m_forces_list.push_back(m_drag);
 }
@@ -85,7 +88,7 @@ void Mover::draw(int shadow)
 	{
 		drawMyCube(shadow, color);
 	}
-	else if (type == 1)
+	else if (type == 1 || type == 2)
 	{
 		drawSphere(shadow, color);
 	}
@@ -123,7 +126,6 @@ void Mover::drawMyCube(int shadow, cyclone::Vector3 color)
 {
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
-	const cyclone::Vector3* anchor = m_spring ? m_spring->getAnchor() : nullptr;
 
 	transformMatrix.setOrientationAndPos(orientation, m_particle->getPosition());
 	GLfloat mat[16];
@@ -144,18 +146,6 @@ void Mover::drawMyCube(int shadow, cyclone::Vector3 color)
 
 	glPopMatrix(); // Add this line to isolate the transformation
 
-	if (anchor != nullptr)
-	{
-		glColor3f(1, 1, 0);  //Line color
-		glLineWidth(3.0f);  //Line Width
-		glPushMatrix();
-		glBegin(GL_LINES);
-		glVertex3f(anchor->x, 0, anchor->z);  //Starting point
-		glVertex3f(anchor->x, anchor->y, anchor->z); //Ending point
-		glEnd();
-		glPopMatrix();
-	}
-
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
 }
@@ -164,7 +154,6 @@ void Mover::drawSphere(int shadow, cyclone::Vector3 color)
 {
 	cyclone::Vector3 position;
 	m_particle->getPosition(&position);
-	const cyclone::Vector3* anchor = m_spring ? m_spring->getAnchor() : nullptr;
 
 	transformMatrix.setOrientationAndPos(orientation, m_particle->getPosition());
 	GLfloat mat[16];
@@ -172,8 +161,18 @@ void Mover::drawSphere(int shadow, cyclone::Vector3 color)
 
 	if (!shadow)
 	{
-		glColor3f(color.x, color.y, color.z);
-		std::cout << position.x << " " << position.y << " " << position.z << std::endl;
+		if (type == 2)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(color.x, color.y, color.z, 0);
+		}
+		else
+		{
+			glDisable(GL_BLEND);
+			glColor3f(color.x, color.y, color.z);
+		}
+		//std::cout << position.x << " " << position.y << " " << position.z << std::endl;
 	}
 
 	glPushMatrix();
@@ -184,21 +183,10 @@ void Mover::drawSphere(int shadow, cyclone::Vector3 color)
 
 	glPopMatrix();
 
-	if (anchor != nullptr)
-	{
-		glColor3f(1, 1, 0);  //Line color
-		glLineWidth(3.0f);  //Line Width
-		glPushMatrix();
-		glBegin(GL_LINES);
-		glVertex3f(anchor->x, 0, anchor->z);  //Starting point
-		glVertex3f(anchor->x, anchor->y, anchor->z); //Ending point
-		glEnd();
-		glPopMatrix();
-	}
-
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
 }
+
 
 void Mover::drawWater()
 {

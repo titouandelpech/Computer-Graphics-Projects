@@ -20,6 +20,7 @@
 #include "Mover.h"
 #include "MoverConnection.h"
 #include "MyContact.h"
+#include "MyEventContact.h"
 #include "ParticleCollision.h"
 #include <FL/Fl_Light_Button.H>
 #include <pworld.h>
@@ -40,6 +41,7 @@ class MyGlWindow : public Fl_Gl_Window {
 
 		Fl_Slider* time;	
 		int run;
+		bool checkRandomNb(float randomX, float randomZ);
 		void update();
 		void drawStuff();
 		void doPick();
@@ -50,6 +52,8 @@ class MyGlWindow : public Fl_Gl_Window {
 		void initMovers();
 		void getParticles(Mover* m);
 		void draw();					// standard FlTk
+		void addEventContact(float x, float y);
+		void removeEventContact(cyclone::MyEventContact *);
 
 		void drawBridge(int shadow);
 		
@@ -66,16 +70,15 @@ class MyGlWindow : public Fl_Gl_Window {
 		void setupLight(float x, float y, float z);
 		Mover *getSelectedBall(int selected);
 
-		cyclone::ParticleContact m_contact[3]; //maximum #of collisions possible
 		//Container for MyGroundContact
 		int maxPossibleContact;
 		int myScore;
 		bool canPlay;
 		bool endGame;
 
-		//bridge
-		std::vector<cyclone::Particle*> m_particleArray;
-		cyclone::ParticleCable cables[CABLE_COUNT];
-		cyclone::ParticleRod rods[ROD_COUNT];
-		cyclone::ParticleCableConstraint supports[SUPPORT_COUNT];
+		bool edge1;
+		bool edge2;
+		bool edge3;
+		bool edge4;
+		std::vector<cyclone::MyEventContact*> m_event_contacts;
 };

@@ -1,143 +1,96 @@
 ﻿cl : ligne de commande  warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   MyGlWindow.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(103,89): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(105,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(107,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(109,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(111,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(113,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(115,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(117,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(119,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(121,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(123,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(125,92): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(127,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(129,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(131,90): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(133,91): warning C4305: 'argument' : troncation de 'double' à 'float'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(162,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(163,25): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(245,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(245,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(245,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(250,24): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(253,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(256,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(256,57): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(256,41): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(285,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(285,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(285,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(292,24): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(294,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(296,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(296,57): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(296,41): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(320,30): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(321,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(321,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(321,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(322,33): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(322,25): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(322,17): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(398,9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(408,9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(424,26): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(426,22): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(437,33): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(437,26): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(437,19): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(448,26): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(456,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(456,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(456,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(457,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(457,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(457,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(461,26): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(469,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(469,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(469,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(470,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(470,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(470,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(474,26): warning C4305: 'argument' : troncation de 'double' à 'GLfloat'
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(481,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(481,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(481,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(482,28): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(482,22): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(482,16): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(517,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(518,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(519,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(584,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(134,95): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(136,89): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(138,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(140,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(142,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(144,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(146,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(148,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(150,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(152,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(154,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(156,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(158,92): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(160,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(162,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(164,90): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(166,91): warning C4305: 'argument' : troncation de 'double' à 'float'
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(196,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(197,25): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(279,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(279,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(279,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(284,24): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(287,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(290,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(290,57): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(290,41): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(318,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(318,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(318,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(325,24): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(327,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(329,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(329,57): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(329,41): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(353,37): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(353,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(353,19): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(354,34): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(354,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(354,20): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(355,33): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(355,25): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(355,17): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(408,194): warning C4244: 'argument' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(437,9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(447,9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(507,34): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(508,34): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(527,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(528,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(529,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(600,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(768,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(768,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(768,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(753,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(768,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(770,73): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(770,58): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(770,43): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(755,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
+C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\MyGlWindow.cpp(770,28): warning C4244: 'argument' : conversion de 'cyclone::real' en 'T', perte possible de données
           with
           [
               T=float
           ]
-  Mover.cpp
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(93,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(94,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(95,11): warning C4244: 'initialisation' : conversion de 'cyclone::real' en 'float', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(134,36): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(134,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(134,18): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(140,47): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(140,35): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(140,23): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(153,34): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(153,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(154,42): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(154,31): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(154,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(175,36): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(175,27): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(175,18): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(181,47): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(181,35): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(181,23): warning C4244: 'argument' : conversion de 'cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(193,34): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(193,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(194,42): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(194,31): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Mover.cpp(194,20): warning C4244: 'argument' : conversion de 'const cyclone::real' en 'GLfloat', perte possible de données
-  Génération de code en cours...
   FrameWork.vcxproj -> C:\Users\titou\Documents\GitHub\Computer-Graphics-Project\NewFrameWork2Init\FrameWork\Debug\FrameWork.exe

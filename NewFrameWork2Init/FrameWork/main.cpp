@@ -73,6 +73,7 @@ void but_cb2(Fl_Widget* o, void*data)
 
 int main()
 {
+	srand(static_cast<unsigned int>(std::time(0)));
 	Fl::scheme("plastic");// plastic
 	int width = 800;
 	int height = 800;

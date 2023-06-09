@@ -1,4 +1,4 @@
-#include "MyGlWindow.h"
+﻿#include "MyGlWindow.h"
 
 #include <iostream>
 #include "drawUtils.h"
@@ -47,7 +47,10 @@ void MyGlWindow::putText(char* string, int x, int y, float r, float g, float b)
 	glEnable(GL_LIGHTING);
 }
 
-
+int generateRandomNumber(int min, int max)
+{
+	return min + (rand() % (max - min + 1));
+}
 
 
 MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
@@ -76,6 +79,11 @@ MyGlWindow::MyGlWindow(int x, int y, int w, int h) :
 
 	TimingData::init();
 	run = 0;
+
+	std::cout << "Feel free to play the game!" << std::endl;
+	std::cout << "Grab the white ball and drop it to release its force," << std::endl;
+	std::cout << "and try to score as much as possible! Be careful and" << std::endl;
+	std::cout << "do not score the black ball or you will loose." << std::endl;
 }
 
 const float degrees2Radians = 3.141592f / 180;
@@ -96,45 +104,71 @@ cyclone::Quaternion generateQuaternion(float degrees, const cyclone::Vector3& ax
 	return orientation;
 }
 
+void MyGlWindow::addEventContact(float x, float y)
+{
+	cyclone::MyEventContact* myEventContact = new cyclone::MyEventContact(x, y);
+	for each (Mover * m in m_movers) {
+		myEventContact->init(m->m_particle, m->size);
+	}
+	m_world->getContactGenerators().push_back(myEventContact);
+	m_event_contacts.push_back(myEventContact);
+}
+
+void MyGlWindow::removeEventContact(cyclone::MyEventContact* event)
+{
+	m_event_contacts.erase(std::remove(m_event_contacts.begin(), m_event_contacts.end(), event), m_event_contacts.end());
+	std::vector<cyclone::ParticleContactGenerator*> &generators = m_world->getContactGenerators();
+	generators.erase(std::remove(generators.begin(), generators.end(), event), generators.end());
+
+	if (event)
+	{
+		delete event;
+		event = nullptr;
+	}
+}
+
 void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
 
-	Mover* a = new Mover(cyclone::Vector3(0, 2, 50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* pointer = new Mover(cyclone::Vector3(0, 3, 50), cyclone::Vector3(0, 0, 0), 50, 0.9, 2);
+	pointer->color = cyclone::Vector3(1, 1, 1);
+	Mover* a = new Mover(cyclone::Vector3(0, 3, 50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	a->color = cyclone::Vector3(1, 1, 1);
-	Mover* b = new Mover(cyclone::Vector3(0, 2, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* b = new Mover(cyclone::Vector3(0, 3, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	b->color = cyclone::Vector3(0, 0, 0);
-	Mover* c = new Mover(cyclone::Vector3(6, 2, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* c = new Mover(cyclone::Vector3(6, 3, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	c->color = cyclone::Vector3(0, 1, 0);
-	Mover* d = new Mover(cyclone::Vector3(-6, 2, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* d = new Mover(cyclone::Vector3(-6, 3, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	d->color = cyclone::Vector3(0, 0, 1);
-	Mover* e = new Mover(cyclone::Vector3(3, 2, -44), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* e = new Mover(cyclone::Vector3(3, 3, -44), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	e->color = cyclone::Vector3(1, 0, 0);
-	Mover* f = new Mover(cyclone::Vector3(-3, 2, -44), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* f = new Mover(cyclone::Vector3(-3, 3, -44), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	f->color = cyclone::Vector3(1, 0, 1);
-	Mover* g = new Mover(cyclone::Vector3(0, 2, -38), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* g = new Mover(cyclone::Vector3(0, 3, -38), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	g->color = cyclone::Vector3(1, 0.5, 0);
-	Mover* h = new Mover(cyclone::Vector3(9, 2, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* h = new Mover(cyclone::Vector3(9, 3, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	h->color = cyclone::Vector3(0, 0.5, 1);
-	Mover* i = new Mover(cyclone::Vector3(3, 2, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* i = new Mover(cyclone::Vector3(3, 3, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	i->color = cyclone::Vector3(0, 1, 0.5);
-	Mover* j = new Mover(cyclone::Vector3(-3, 2, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* j = new Mover(cyclone::Vector3(-3, 3, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	j->color = cyclone::Vector3(1, 0, 0.5);
-	Mover* k = new Mover(cyclone::Vector3(-9, 2, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* k = new Mover(cyclone::Vector3(-9, 3, -56), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	k->color = cyclone::Vector3(0.5, 0, 1);
-	Mover* l = new Mover(cyclone::Vector3(-12, 2, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* l = new Mover(cyclone::Vector3(-12, 3, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	l->color = cyclone::Vector3(0, 1, 1);
-	Mover* m = new Mover(cyclone::Vector3(-6, 2, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* m = new Mover(cyclone::Vector3(-6, 3, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	m->color = cyclone::Vector3(1, 1, 0);
-	Mover* n = new Mover(cyclone::Vector3(0, 2, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* n = new Mover(cyclone::Vector3(0, 3, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	n->color = cyclone::Vector3(0.5, 1, 0.5);
-	Mover* o = new Mover(cyclone::Vector3(6, 2, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* o = new Mover(cyclone::Vector3(6, 3, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	o->color = cyclone::Vector3(0, 0, 0.5);
-	Mover* p = new Mover(cyclone::Vector3(12, 2, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
+	Mover* p = new Mover(cyclone::Vector3(12, 3, -62), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	p->color = cyclone::Vector3(0, 0.3, 0);
 
 	//Must input a 1/2 angle that you want to rotate
 	//a->orientation = generateQuaternion(-45, cyclone::Vector3(1, 0, 0));
+	m_movers.push_back(pointer);
 	m_movers.push_back(a);
 	m_movers.push_back(b);
 	m_movers.push_back(c);
@@ -159,7 +193,7 @@ void MyGlWindow::initMovers()
 	}
 	
 	//collision between particles
-	for (int i = 0; i < m_movers.size(); i++) {
+	for (int i = 1; i < m_movers.size(); i++) {
 		for (int j = i + 1; j < m_movers.size(); j++) {
 			cyclone::ParticleCollision* myParticleCollisions = new cyclone::ParticleCollision();
 			myParticleCollisions->particle[0] = m_movers[i]->m_particle;
@@ -271,11 +305,10 @@ void MyGlWindow::getParticles(Mover *m)
 	  glLineWidth(1);
   }
 
-  void drawArrowTargetPos(cyclone::Vector3 pos, cyclone::Vector3 targetPos) {
+  void drawArrowTargetPos(cyclone::Vector3 pos, cyclone::Vector3 targetPos, float arrowLength = 10.0f) {
 	  // Arrow parameters
-	  float arrowLength = 5.0f;
-	  float arrowHeadHeight = 0.5f;
-	  float arrowHeadRadius = 0.3f;
+	  float arrowHeadHeight = 4.0f;
+	  float arrowHeadRadius = 2.4f;
 	  cyclone::Vector3 direction = (targetPos - pos).unit();
 
 	  glColor3f(0.7f, 0.7f, 0);
@@ -311,13 +344,13 @@ void MyGlWindow::getParticles(Mover *m)
 	  glLineWidth(1);
   }
 
-  void drawEdges(cyclone::Vector3 pos, cyclone::Vector3 size)
+  void drawEdges(cyclone::Vector3 pos, cyclone::Vector3 size, cyclone::Vector3 color)
   {
 	  setupFloor();
 
 	  glEnable(GL_LIGHTING);
 	  glPushMatrix();
-	  glColor3f(0.04, 0.20, 0.00);
+	  glColor3f(color.x, color.y, color.z);
 	  glTranslatef(pos.x, pos.y, pos.z);
 	  drawCube(size.x, size.y, size.z);
 	  glPopMatrix();
@@ -370,8 +403,9 @@ void MyGlWindow::draw()
 		glPopMatrix();
 	 }
 	
-	  if (m_movers.size() > 0 && m_movers[0]->color == cyclone::Vector3(1, 1, 1) && canPlay)
-		drawArrowTargetDir(m_movers[0]->m_particle->getPosition(), cyclone::Vector3(0, 0, -1).unit());
+	  if (m_movers.size() > 0 && m_movers[1]->color == cyclone::Vector3(1, 1, 1) && canPlay)
+		drawArrowTargetDir(m_movers[1]->m_particle->getPosition(), cyclone::Vector3(0, 1, 0).unit());
+	  drawArrowTargetPos(m_movers[1]->m_particle->getPosition(), m_movers[0]->m_particle->getPosition(), (m_movers[1]->m_particle->getPosition() - m_movers[0]->m_particle->getPosition()).magnitude());
 
 	  glPushMatrix();
 	  // Set position and scale for the black hole
@@ -380,15 +414,20 @@ void MyGlWindow::draw()
 
 	  glPopMatrix();
 
-	  drawEdges(cyclone::Vector3(0, -0.5f, 0), cyclone::Vector3(80, 1, 10));
-	  drawEdges(cyclone::Vector3(0, -0.5f, 97), cyclone::Vector3(80, 1, 10));
-	  drawEdges(cyclone::Vector3(0, -0.5f, -97), cyclone::Vector3(80, 1, 10));
-	  drawEdges(cyclone::Vector3(0, -0.5f, 48.5), cyclone::Vector3(104, 1, 87));
-	  drawEdges(cyclone::Vector3(0, -0.5f, -48.5), cyclone::Vector3(104, 1, 87));
-	  drawEdges(cyclone::Vector3(52.5, 10, 0), cyclone::Vector3(5, 20, 210));
-	  drawEdges(cyclone::Vector3(-52.5, 10, 0), cyclone::Vector3(5, 20, 210));
-	  drawEdges(cyclone::Vector3(0, 10, 102.5), cyclone::Vector3(100, 20, 5));
-	  drawEdges(cyclone::Vector3(0, 10, -102.5), cyclone::Vector3(100, 20, 5));
+	  drawEdges(cyclone::Vector3(0, -0.5f, 0), cyclone::Vector3(80, 1, 10), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, -0.5f, 97), cyclone::Vector3(80, 1, 10), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, -0.5f, -97), cyclone::Vector3(80, 1, 10), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, -0.5f, 48.5), cyclone::Vector3(104, 1, 87), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, -0.5f, -48.5), cyclone::Vector3(104, 1, 87), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(52.5, 10, 0), cyclone::Vector3(5, 20, 210), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(-52.5, 10, 0), cyclone::Vector3(5, 20, 210), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, 10, 102.5), cyclone::Vector3(100, 20, 5), cyclone::Vector3(0.04, 0.20, 0.00));
+	  drawEdges(cyclone::Vector3(0, 10, -102.5), cyclone::Vector3(100, 20, 5), cyclone::Vector3(0.04, 0.20, 0.00));
+
+	  for each (cyclone::MyEventContact *event in m_event_contacts)
+	  {
+		  drawEdges(cyclone::Vector3(event->PosX, event->wallHeight / 2, event->PosZ), cyclone::Vector3(5, event->wallHeight, 5), cyclone::Vector3(1, 1, 1));
+	  }
 
 	  //glutSwapBuffers();
 
@@ -412,78 +451,6 @@ void MyGlWindow::draw()
   }
 
   setProjection();
-
- //glEnable(GL_COLOR_MATERIAL);
-}
-
-void MyGlWindow::drawBridge(int shadow)
-{
-	glLineWidth(3.0);
-
-	if (shadow)
-		glColor3f(0.2, 0.2, 0.2);
-	else
-		glColor3f(0.8, 0, 0);
-
-	int name = 1;
-	cyclone::ParticleWorld::Particles& particles = m_world->getParticles();
-	for (cyclone::ParticleWorld::Particles::iterator p = particles.begin();
-		p != particles.end();
-		p++)
-	{
-		cyclone::Particle* particle = *p;
-		const cyclone::Vector3& pos = particle->getPosition();
-		glPushMatrix();
-		glTranslatef(pos.x, pos.y, pos.z);
-		if (!shadow)
-			glLoadName(name);
-		glutSolidSphere(0.2f, 20, 10);
-		glPopMatrix();
-		name++;
-	}
-
-	glBegin(GL_LINES);
-
-	if (shadow)
-		glColor3f(0.2, 0.2, 0.2);
-	else
-		glColor3f(0, 0, 1);
-	for (unsigned i = 0; i < ROD_COUNT; i++)
-	{
-		cyclone::Particle** particles = rods[i].particle;
-		const cyclone::Vector3& p0 = particles[0]->getPosition();
-		const cyclone::Vector3& p1 = particles[1]->getPosition();
-		glVertex3f(p0.x, p0.y, p0.z);
-		glVertex3f(p1.x, p1.y, p1.z);
-	}
-
-	if (shadow)
-		glColor3f(0.2, 0.2, 0.2);
-	else
-		glColor3f(0, 1, 0);
-	for (unsigned i = 0; i < CABLE_COUNT; i++)
-	{
-		cyclone::Particle** particles = cables[i].particle;
-		const cyclone::Vector3& p0 = particles[0]->getPosition();
-		const cyclone::Vector3& p1 = particles[1]->getPosition();
-		glVertex3f(p0.x, p0.y, p0.z);
-		glVertex3f(p1.x, p1.y, p1.z);
-	}
-
-	if (shadow)
-		glColor3f(0.2, 0.2, 0.2);
-	else
-		glColor3f(0.7f, 0.7f, 0.7f);
-	for (unsigned i = 0; i < SUPPORT_COUNT; i++)
-	{
-		const cyclone::Vector3& p0 = supports[i].particle->getPosition();
-		const cyclone::Vector3& p1 = supports[i].anchor;
-		glVertex3f(p0.x, p0.y, p0.z);
-		glVertex3f(p1.x, p1.y, p1.z);
-	}
-	glEnd();
-
-	glLineWidth(1.0);
 }
 
 void MyGlWindow::restart()
@@ -494,7 +461,21 @@ void MyGlWindow::restart()
 	m_world->getParticles().clear();
 	m_world->getContactGenerators().clear();
 
+	for (cyclone::MyEventContact* event : m_event_contacts)
+		removeEventContact(event);
+	m_event_contacts.clear();
+
 	initMovers();
+}
+
+bool MyGlWindow::checkRandomNb(float randomX, float randomZ)
+{
+	for (Mover* mover : m_movers) {
+		//std::cout << (cyclone::Vector3(randomX, 3, randomZ) - mover->m_particle->getPosition()).magnitude() << std::endl;
+		if ((cyclone::Vector3(randomX, 3, randomZ) - mover->m_particle->getPosition()).magnitude() < 8)
+			return false;
+	}
+	return true;
 }
 
 void MyGlWindow::update()
@@ -507,12 +488,41 @@ void MyGlWindow::update()
 	
 	m_world->runPhysics(duration);
 
-	std::vector<Mover*> toBeDeleted;
+	std::vector<Mover*> toBeDeletedMover;
+	std::vector<cyclone::MyEventContact*> toBeDeletedEventContact;
 	canPlay = true;
 
-	if (m_movers.size() <= 2) endGame = true;
+	if (endGame) return;
+	if (m_movers.size() <= 3)
+	{
+		std::cout << "Someone finished the game! Score : " << myScore << std::endl;
+		endGame = true;
+	}
 	if (endGame) return;
 
+	if (m_event_contacts.size() < 17 - m_movers.size())
+	{
+		float randomX, randomZ;
+		do {
+			randomX = generateRandomNumber(-35, 35);
+			randomZ = generateRandomNumber(-90, 90);
+		} while (!checkRandomNb(randomX, randomZ));
+		addEventContact(randomX, randomZ);
+	}
+
+	//handle event contacts
+	for (cyclone::MyEventContact * event : m_event_contacts)
+	{
+		event->wallHeight += (event->moveUp) ? ((event->wallHeight >= 20) ? 0 : duration * 8) : -duration * 8;
+		if (event->shouldDestroy()) event->moveUp = false;
+		if (event->wallHeight <= 0) toBeDeletedEventContact.push_back(event);
+	}
+	for (cyclone::MyEventContact* event : toBeDeletedEventContact)
+	{
+		removeEventContact(event);
+	}
+
+	// handle balls movers score and turns
 	for (Mover* mover : m_movers) {
 		float x = mover->m_particle->getPosition().x;
 		float y = mover->m_particle->getPosition().y;
@@ -529,11 +539,12 @@ void MyGlWindow::update()
 			}
 			else if (mover->color == cyclone::Vector3())
 			{
+				std::cout << "Someone lost! Score : " << myScore << std::endl;
 				endGame = true;
 				continue;
 			}
 			else
-				toBeDeleted.push_back(mover);
+				toBeDeletedMover.push_back(mover);
 			if (x < -51 || x > 51 || z > 101 || z < -101)
 				myScore--;
 			else
@@ -546,10 +557,15 @@ void MyGlWindow::update()
 			mover->m_particle->setVelocity(cyclone::Vector3());
 		}
 	}
-
-	for (Mover* mover : toBeDeleted) {
+	for (Mover* mover : toBeDeletedMover) {
 		m_movers.erase(std::remove(m_movers.begin(), m_movers.end(), mover), m_movers.end());
 		delete mover;
+	}
+
+	if (selected != 0)
+	{
+		m_movers[0]->m_particle->setPosition(m_movers[1]->m_particle->getPosition());
+		m_movers[0]->m_particle->setVelocity(cyclone::Vector3());
 	}
 }
 
@@ -645,8 +661,9 @@ int MyGlWindow::handle(int e)
 
 		 if (m_pressedMouseButton == 1 && canPlay) {
 			 doPick();
+			 if (selected == 1) selected = 0;
 			 if (selected == 0) {
-				 std::cout << "picked" << std::endl;
+				 //std::cout << "picked" << std::endl;
 				 p1selected = getSelectedBall(selected)->m_particle->getPosition();
 			 }
 		 }
@@ -662,7 +679,7 @@ int MyGlWindow::handle(int e)
 		  
 		  cyclone::Vector3 newVelocity(p2selected.x - p1selected.x, p2selected.y - p1selected.y, p2selected.z - p1selected.z);
 		  
-		  getSelectedBall(selected)->m_particle->setVelocity(newVelocity);
+		  m_movers[1]->m_particle->setVelocity(newVelocity);
 
 		  selected = -1;
 
@@ -696,8 +713,6 @@ int MyGlWindow::handle(int e)
 		      	  m_viewer->rotate( fractionChangeX, fractionChangeY );
 		      } else if( m_pressedMouseButton == 3 ) {
 		      	  m_viewer->translate( -fractionChangeX, -fractionChangeY, (Fl::event_key(FL_Shift_L) == 0) || (Fl::event_key(FL_Shift_R) == 0));
-		      } else {
-		      	  std::cout << "Warning: dragging with unknown mouse button!  Nothing will be done" << std::endl;
 		      }
 		      
 		      m_lastMouseX = Fl::event_x();

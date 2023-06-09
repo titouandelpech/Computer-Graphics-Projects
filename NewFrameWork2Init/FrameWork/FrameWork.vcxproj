@@ -119,6 +119,7 @@
     <ClCompile Include="MMatrix.cpp" />
     <ClCompile Include="MoverConnection.cpp" />
     <ClCompile Include="MyContact.cpp" />
+    <ClCompile Include="MyEventContact.cpp" />
     <ClCompile Include="MyGlWindow.cpp" />
     <ClCompile Include="Mover.cpp" />
     <ClCompile Include="MyParticleBuoyancy.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="..\Cyclone\world.h" />
     <ClInclude Include="3DUtils.h" />
     <ClInclude Include="DrawUtils.H" />
+    <ClInclude Include="MyEventContact.h" />
     <ClInclude Include="MMatrix.H" />
     <ClInclude Include="Mover.h" />
     <ClInclude Include="MoverConnection.h" />
