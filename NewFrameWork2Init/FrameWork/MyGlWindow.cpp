@@ -456,15 +456,19 @@ void MyGlWindow::drawBridge(int shadow)
 
 void MyGlWindow::test()
 {
-	for (unsigned int i = 0; i < m_movers.size(); i++) {
-		m_movers[i]->~Mover();
-	}
-	m_moverConnection->~MoverConnection();
-	m_contactGenerators.clear();
-	//m_world->getParticles().clear();
-	//m_world->getContactGenerators().clear();
+	//for (unsigned int i = 0; i < m_movers.size(); i++) {
+	//	m_movers[i]->~Mover();
+	//}
+	//m_moverConnection->~MoverConnection();
+	//m_contactGenerators.clear();
+	////m_world->getParticles().clear();
+	////m_world->getContactGenerators().clear();
+	//
+	//initMovers();
 
-	initMovers();
+	for (int i = 0; i < m_movers.size(); i++) {
+		m_movers[i]->addTorque(cyclone::Vector3(0, 0, 100), cyclone::Vector3(0.9, 6, 0));
+	}
 }
 
 void MyGlWindow::update()

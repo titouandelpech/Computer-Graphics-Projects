@@ -63,6 +63,8 @@ Mover::Mover(cyclone::Vector3 position, cyclone::Vector3 velocity, float mass, f
 	//m_forces_list.push_back(m_gravity);
 	//m_forces->add(m_particle, m_drag);
 	//m_forces_list.push_back(m_drag);
+
+	torqueAccum.clear();
 }
 
 void Mover::update(float duration)
@@ -74,12 +76,24 @@ void Mover::update(float duration)
 		m_forces->updateForces(duration);
 	m_particle->integrate(duration);
 
-	cyclone::Vector3 angularAcceleration(0, 0.1, 0);
+	cyclone::Matrix3 inertiaMatrix;
+	inertiaMatrix.setBlockInertiaTensor(cyclone::Vector3(1, 1, 1), 3.0);
+	inverseInertiaMatrix = inertiaMatrix.inverse();
+
+	cyclone::Matrix3 orientationMatrix;
+	orientationMatrix.setOrientation(orientation);
+	cyclone::Matrix3 TransposeorintationMatrix = orientationMatrix;
+
+	inverseInertiaTensorWorld =
+		orientationMatrix * inverseInertiaMatrix * TransposeorintationMatrix;
+
+	cyclone::Vector3 angularAcceleration = inverseInertiaTensorWorld.transform(torqueAccum);
+	torqueAccum.clear();
 	rotation.addScaledVector(angularAcceleration, duration);
 	double angularDamping = 0.9;
 	rotation *= real_pow(angularDamping, duration);
 	orientation.addScaledVector(rotation, duration);
-	orientation.normalise();	
+	orientation.normalise();
 
 	//if (has_collisions) checkEdges();
 }
@@ -145,6 +159,12 @@ void Mover::draw(int shadow, cyclone::Vector3 color)
 
 	if (shadow)
 		glColor3f(0.1f, 0.1f, 0.1f);
+}
+
+void Mover::addTorque(cyclone::Vector3 force, cyclone::Vector3 point)
+{
+	torqueAccum = (point - m_particle->getPosition()).cross(force);
+	std::cout << torqueAccum.x << " " << torqueAccum.y << " " << torqueAccum.z << std::endl;
 }
 
 void Mover::checkEdges()
