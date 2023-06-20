@@ -114,6 +114,7 @@
     <ClCompile Include="..\Cyclone\random.cpp" />
     <ClCompile Include="..\Cyclone\world.cpp" />
     <ClCompile Include="3DUtils.cpp" />
+    <ClCompile Include="BlackHoleEvent.cpp" />
     <ClCompile Include="DrawUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MMatrix.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="..\Cyclone\random.h" />
     <ClInclude Include="..\Cyclone\world.h" />
     <ClInclude Include="3DUtils.h" />
+    <ClInclude Include="BlackHoleEvent.h" />
     <ClInclude Include="DrawUtils.H" />
     <ClInclude Include="MyEventContact.h" />
     <ClInclude Include="MMatrix.H" />

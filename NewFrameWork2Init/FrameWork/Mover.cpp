@@ -165,7 +165,7 @@ void Mover::drawSphere(int shadow, cyclone::Vector3 color)
 		{
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glColor4f(color.x, color.y, color.z, 0);
+			glColor4f(1, 1, 1, 0);
 		}
 		else
 		{
@@ -198,21 +198,6 @@ void Mover::drawWater()
 	glTranslatef(0, 5.0, 0);
 	drawCube(size, 10, size);
 	glPopMatrix();
-}
-
-void Mover::drawBlackHole()
-{
-	glColor3f(0.0, 0.0, 0.0); // Set color to black
-
-	GLUquadric* quadric = gluNewQuadric();
-	gluQuadricDrawStyle(quadric, GLU_FILL);
-	gluQuadricNormals(quadric, GLU_SMOOTH);
-
-	glPushMatrix();
-	gluSphere(quadric, size, 50, 50);
-	glPopMatrix();
-
-	gluDeleteQuadric(quadric);
 }
 
 void Mover::checkEdges()

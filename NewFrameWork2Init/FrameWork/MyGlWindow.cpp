@@ -107,8 +107,8 @@ cyclone::Quaternion generateQuaternion(float degrees, const cyclone::Vector3& ax
 void MyGlWindow::addEventContact(float x, float y)
 {
 	cyclone::MyEventContact* myEventContact = new cyclone::MyEventContact(x, y);
-	for each (Mover * m in m_movers) {
-		myEventContact->init(m->m_particle, m->size);
+	for (int i = 1; i < m_movers.size(); i++) {
+		myEventContact->init(m_movers[i]->m_particle, m_movers[i]->size);
 	}
 	m_world->getContactGenerators().push_back(myEventContact);
 	m_event_contacts.push_back(myEventContact);
@@ -127,12 +127,29 @@ void MyGlWindow::removeEventContact(cyclone::MyEventContact* event)
 	}
 }
 
+void MyGlWindow::createBlackHoleEvent(cyclone::Vector3 pos)
+{
+	blackHoleEvent = new cyclone::BlackHoleEvent(pos);
+	for (int i = 1; i < m_movers.size(); i++) {
+		blackHoleEvent->init(m_movers[i]->m_particle);
+	}
+	m_world->getContactGenerators().push_back(blackHoleEvent);
+}
+
+void MyGlWindow::clearBlackHoleEvent()
+{
+	std::vector<cyclone::ParticleContactGenerator*>& generators = m_world->getContactGenerators();
+	generators.erase(std::remove(generators.begin(), generators.end(), blackHoleEvent), generators.end());
+
+	blackHoleEvent = nullptr;
+}
+
 void MyGlWindow::initMovers()
 {
 	m_movers = std::vector<Mover*>();
 
 	Mover* pointer = new Mover(cyclone::Vector3(0, 3, 50), cyclone::Vector3(0, 0, 0), 50, 0.9, 2);
-	pointer->color = cyclone::Vector3(1, 1, 1);
+	pointer->color = cyclone::Vector3(-1, -1, -1);
 	Mover* a = new Mover(cyclone::Vector3(0, 3, 50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
 	a->color = cyclone::Vector3(1, 1, 1);
 	Mover* b = new Mover(cyclone::Vector3(0, 3, -50), cyclone::Vector3(0, 0, 0), 50, 0.9, 1);
@@ -209,6 +226,9 @@ void MyGlWindow::initMovers()
 		myEdgeContact->init(m->m_particle, m->size);
 	}
 	m_world->getContactGenerators().push_back(myEdgeContact);
+
+	blackHoleEvent = nullptr;
+	jumperPos = nullptr;
 
 	myScore = 0;
 	canPlay = true;
@@ -361,6 +381,24 @@ void MyGlWindow::drawStuff()
    polygonf( 4, 20., 0.,-25.,  20., 0., 25.,  20., 30., 25.,  20., 30., -25.);
 }
 
+void drawBlackHole(cyclone::BlackHoleEvent *blackHoleEvent)
+{
+	const float radius = blackHoleEvent->attractionDistance / 2;
+	const int slices = 50;
+	const int stacks = 50;
+
+	glColor3f(0.0f, 0.0f, 0.0f); // Set black color
+
+	glPushMatrix();
+	cyclone::Vector3 pos = blackHoleEvent->blackHolePosition;
+	glTranslatef(pos.x, pos.y, pos.z);
+
+	// Draw black hole using glutSolidSphere
+	glutSolidSphere(radius, slices, stacks);
+
+	glPopMatrix();
+}
+
 //==========================================================================
 void MyGlWindow::draw()
 //==========================================================================
@@ -423,6 +461,11 @@ void MyGlWindow::draw()
 	  drawEdges(cyclone::Vector3(-52.5, 10, 0), cyclone::Vector3(5, 20, 210), cyclone::Vector3(0.04, 0.20, 0.00));
 	  drawEdges(cyclone::Vector3(0, 10, 102.5), cyclone::Vector3(100, 20, 5), cyclone::Vector3(0.04, 0.20, 0.00));
 	  drawEdges(cyclone::Vector3(0, 10, -102.5), cyclone::Vector3(100, 20, 5), cyclone::Vector3(0.04, 0.20, 0.00));
+	  if (jumperPos != nullptr)
+		drawEdges(*jumperPos, cyclone::Vector3(5, 1, 5), cyclone::Vector3(1, 0, 0));
+
+	  if (blackHoleEvent != nullptr)
+		drawBlackHole(blackHoleEvent);
 
 	  for each (cyclone::MyEventContact *event in m_event_contacts)
 	  {
@@ -468,11 +511,11 @@ void MyGlWindow::restart()
 	initMovers();
 }
 
-bool MyGlWindow::checkRandomNb(float randomX, float randomZ)
+bool MyGlWindow::checkRandomNb(float randomX, float randomZ, float minimalDistance)
 {
 	for (Mover* mover : m_movers) {
-		//std::cout << (cyclone::Vector3(randomX, 3, randomZ) - mover->m_particle->getPosition()).magnitude() << std::endl;
-		if ((cyclone::Vector3(randomX, 3, randomZ) - mover->m_particle->getPosition()).magnitude() < 8)
+		//to make sure it's far from the movers
+		if ((cyclone::Vector3(randomX, 3, randomZ) - mover->m_particle->getPosition()).magnitude() < minimalDistance) 
 			return false;
 	}
 	return true;
@@ -500,14 +543,45 @@ void MyGlWindow::update()
 	}
 	if (endGame) return;
 
-	if (m_event_contacts.size() < 17 - m_movers.size())
+	if (m_event_contacts.size() < 17 - m_movers.size()) //create an event contact for every ball scored
 	{
 		float randomX, randomZ;
 		do {
 			randomX = generateRandomNumber(-35, 35);
 			randomZ = generateRandomNumber(-90, 90);
-		} while (!checkRandomNb(randomX, randomZ));
+		} while (!checkRandomNb(randomX, randomZ, 8));
 		addEventContact(randomX, randomZ);
+	}
+
+	if (blackHoleEvent == nullptr && m_movers.size() < 16)
+	{
+		createBlackHoleEvent(cyclone::Vector3(generateRandomNumber(-35, 35), 10, generateRandomNumber(-90, 90)));
+	}
+	else if (blackHoleEvent != nullptr)
+	{
+		if (blackHoleEvent->attractionDistance < 20 && !blackHoleEvent->shouldDestroy())
+		{
+			blackHoleEvent->attractionDistance += duration * 8;
+		}
+		else if (blackHoleEvent->shouldDestroy())
+		{
+			blackHoleEvent->attractionDistance -= duration * 8;
+			if (blackHoleEvent->attractionDistance <= 1) clearBlackHoleEvent();
+		}
+	}
+
+	if (jumperPos == nullptr && m_movers.size() < 10)
+	{
+		jumperPos = new cyclone::Vector3(generateRandomNumber(-35, 35), 0.5f, generateRandomNumber(-90, 90));
+	}
+	else if (jumperPos != nullptr)
+	{
+		for (int i = 1; i < m_movers.size(); i++) {
+			if ((m_movers[i]->m_particle->getPosition() - *jumperPos).magnitude() < 5)
+			{
+				m_movers[i]->m_particle->addForce(cyclone::Vector3(0, 10000, 0));
+			}
+		}
 	}
 
 	//handle event contacts
@@ -528,7 +602,12 @@ void MyGlWindow::update()
 		float y = mover->m_particle->getPosition().y;
 		float z = mover->m_particle->getPosition().z;
 
-		if (y <= -1)
+		if (y <= -0.3) //to make scoring easier
+		{
+			mover->m_particle->setVelocity(cyclone::Vector3(0, -1, 0));
+		}
+
+		if (y <= -2)
 		{
 			if (mover->color == cyclone::Vector3(1, 1, 1))
 			{
@@ -543,6 +622,8 @@ void MyGlWindow::update()
 				endGame = true;
 				continue;
 			}
+			else if (mover->color == cyclone::Vector3(-1, -1, -1))
+				continue;
 			else
 				toBeDeletedMover.push_back(mover);
 			if (x < -51 || x > 51 || z > 101 || z < -101)
@@ -550,7 +631,7 @@ void MyGlWindow::update()
 			else
 				myScore++;
 		}
-		else if (mover->m_particle->getVelocity().magnitude() >= 2) {
+		else if (mover->color == cyclone::Vector3(1, 1, 1) && mover->m_particle->getVelocity().magnitude() >= 2) {
 			canPlay = false;
 		}
 		else if (mover->m_particle->getVelocity().magnitude() < 0.8f) {

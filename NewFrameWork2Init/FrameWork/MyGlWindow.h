@@ -26,6 +26,7 @@
 #include <pworld.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include "BlackHoleEvent.h"
 
 const int CABLE_COUNT = 10;
 const int ROD_COUNT = 6;
@@ -41,7 +42,7 @@ class MyGlWindow : public Fl_Gl_Window {
 
 		Fl_Slider* time;	
 		int run;
-		bool checkRandomNb(float randomX, float randomZ);
+		bool checkRandomNb(float randomX, float randomZ, float minimalDistance);
 		void update();
 		void drawStuff();
 		void doPick();
@@ -54,6 +55,8 @@ class MyGlWindow : public Fl_Gl_Window {
 		void draw();					// standard FlTk
 		void addEventContact(float x, float y);
 		void removeEventContact(cyclone::MyEventContact *);
+		void createBlackHoleEvent(cyclone::Vector3);
+		void clearBlackHoleEvent();
 
 		void drawBridge(int shadow);
 		
@@ -81,4 +84,6 @@ class MyGlWindow : public Fl_Gl_Window {
 		bool edge3;
 		bool edge4;
 		std::vector<cyclone::MyEventContact*> m_event_contacts;
+		cyclone::BlackHoleEvent *blackHoleEvent;
+		cyclone::Vector3* jumperPos;
 };
